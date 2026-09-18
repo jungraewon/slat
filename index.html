@@ -1,0 +1,155 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOVA 스마트폰 스토어</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- 시작 화면 -->
+  <section id="startScreen" class="screen start-screen">
+    <div class="start-content">
+      <div class="brand">NOVA</div>
+
+      <h1>스마트폰 구매 실험</h1>
+
+      <p>
+        여러 스마트폰의 정보를 확인한 후<br />
+        가장 구매하고 싶은 상품을 선택해주세요.
+      </p>
+
+      <div class="notice">
+        <span>✓</span> 모든 상품은 가상의 상품입니다.
+        <br />
+        <span>✓</span> 원하는 만큼 상품을 비교할 수 있습니다.
+      </div>
+
+      <button id="startButton" class="primary-button">
+        쇼핑 시작하기
+      </button>
+    </div>
+  </section>
+
+
+  <!-- 쇼핑몰 화면 -->
+  <section id="shopScreen" class="screen hidden">
+
+    <header class="shop-header">
+      <div class="header-inner">
+        <div class="brand">NOVA</div>
+
+        <div class="header-title">
+          스마트폰
+        </div>
+
+        <div class="experiment-badge">
+          구매 실험
+        </div>
+      </div>
+    </header>
+
+    <main class="shop-main">
+
+      <div class="shop-intro">
+        <h2>스마트폰</h2>
+        <p>원하는 상품을 자유롭게 비교해보세요.</p>
+      </div>
+
+      <div id="productGrid" class="product-grid">
+        <!-- JavaScript에서 상품 카드 생성 -->
+      </div>
+
+    </main>
+
+  </section>
+
+
+  <!-- 상세 페이지 -->
+  <section id="detailScreen" class="screen hidden">
+
+    <header class="shop-header">
+      <div class="header-inner">
+        <button id="backButton" class="back-button">
+          ← 상품 목록
+        </button>
+
+        <div class="brand">NOVA</div>
+
+        <div></div>
+      </div>
+    </header>
+
+    <main id="detailContainer" class="detail-main">
+      <!-- JavaScript에서 상세 페이지 생성 -->
+    </main>
+
+  </section>
+
+
+  <!-- 선택 확인 모달 -->
+  <div id="confirmModal" class="modal-overlay hidden">
+
+    <div class="confirm-modal">
+
+      <button id="closeModal" class="modal-close">
+        ×
+      </button>
+
+      <div class="modal-icon">🛒</div>
+
+      <h3 id="confirmTitle">
+        이 상품을 선택하시겠습니까?
+      </h3>
+
+      <p>
+        최종 선택 후에는 실험이 종료됩니다.
+      </p>
+
+      <div class="modal-buttons">
+        <button id="cancelButton" class="secondary-button">
+          취소
+        </button>
+
+        <button id="confirmButton" class="primary-button">
+          선택하기
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- 종료 화면 -->
+  <section id="completeScreen" class="screen hidden complete-screen">
+
+    <div class="complete-content">
+
+      <div class="complete-icon">
+        ✓
+      </div>
+
+      <h1>선택이 완료되었습니다.</h1>
+
+      <p>
+        실험에 참여해주셔서 감사합니다.
+      </p>
+
+      <div class="complete-box">
+        최종 선택이 정상적으로 기록되었습니다.
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <script type="module" src="/src/main.js"></script>
+
+</body>
+</html>
+```
