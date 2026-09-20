@@ -1,0 +1,668 @@
+/* ======================================================
+   NOVA ADMIN DASHBOARD
+====================================================== */
+
+:root {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #17181c;
+  --sub: #777b85;
+  --line: #e7e8ec;
+  --accent: #111111;
+  --soft: #f0f1f3;
+  --green: #18a66a;
+  --red: #e05252;
+  --blue: #4778e8;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Noto Sans KR",
+    sans-serif;
+
+  background: var(--bg);
+  color: var(--text);
+}
+
+
+button {
+  font: inherit;
+}
+
+
+.admin-page {
+  min-height: 100vh;
+}
+
+
+/* ======================================================
+   HEADER
+====================================================== */
+
+.admin-header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--line);
+
+  padding: 22px 40px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+
+.logo {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+
+.logo-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--line);
+}
+
+
+.admin-title {
+  font-size: 14px;
+  color: var(--sub);
+}
+
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+
+.header-button {
+  border: 1px solid var(--line);
+  background: #ffffff;
+
+  padding: 10px 15px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition: 0.15s;
+}
+
+
+.header-button:hover {
+  background: var(--soft);
+}
+
+
+.header-button.primary {
+  background: #111111;
+  color: white;
+  border-color: #111111;
+}
+
+
+/* ======================================================
+   CONTENT
+====================================================== */
+
+.admin-container {
+  width: min(1400px, calc(100% - 40px));
+
+  margin: 0 auto;
+
+  padding: 35px 0 70px;
+}
+
+
+.page-heading {
+  margin-bottom: 28px;
+}
+
+
+.page-heading h1 {
+  margin: 0 0 8px;
+
+  font-size: 30px;
+  letter-spacing: -1px;
+}
+
+
+.page-heading p {
+  margin: 0;
+
+  color: var(--sub);
+
+  font-size: 14px;
+}
+
+
+/* ======================================================
+   STAT CARDS
+====================================================== */
+
+.stat-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 16px;
+
+  margin-bottom: 30px;
+}
+
+
+.stat-card {
+  background: var(--card);
+
+  border: 1px solid var(--line);
+
+  border-radius: 16px;
+
+  padding: 23px;
+}
+
+
+.stat-label {
+  font-size: 13px;
+  color: var(--sub);
+
+  margin-bottom: 12px;
+}
+
+
+.stat-value {
+  font-size: 30px;
+  font-weight: 800;
+
+  letter-spacing: -1px;
+}
+
+
+.stat-description {
+  margin-top: 8px;
+
+  font-size: 12px;
+  color: var(--sub);
+}
+
+
+/* ======================================================
+   SECTION
+====================================================== */
+
+.dashboard-section {
+  margin-top: 28px;
+}
+
+
+.section-header {
+  margin-bottom: 15px;
+}
+
+
+.section-header h2 {
+  margin: 0;
+
+  font-size: 20px;
+
+  letter-spacing: -0.5px;
+}
+
+
+.section-header p {
+  margin: 6px 0 0;
+
+  color: var(--sub);
+
+  font-size: 13px;
+}
+
+
+.card {
+  background: white;
+
+  border: 1px solid var(--line);
+
+  border-radius: 16px;
+
+  overflow: hidden;
+}
+
+
+/* ======================================================
+   PRODUCT ANALYSIS
+====================================================== */
+
+.product-analysis {
+  padding: 22px;
+}
+
+
+.product-row {
+  display: grid;
+
+  grid-template-columns:
+    100px
+    1fr
+    100px
+    100px
+    120px
+    140px;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 16px 0;
+
+  border-bottom: 1px solid var(--line);
+}
+
+
+.product-row:last-child {
+  border-bottom: 0;
+}
+
+
+.product-name {
+  font-weight: 800;
+}
+
+
+.product-info {
+  font-size: 12px;
+  color: var(--sub);
+}
+
+
+.metric-number {
+  font-weight: 700;
+  text-align: center;
+}
+
+
+.metric-label {
+  display: block;
+
+  font-size: 10px;
+
+  color: var(--sub);
+
+  margin-bottom: 4px;
+}
+
+
+.bar-area {
+  width: 100%;
+}
+
+
+.bar-background {
+  height: 8px;
+
+  background: #eceef1;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+
+.bar-fill {
+  height: 100%;
+
+  background: #111111;
+
+  border-radius: 999px;
+
+  transition: width 0.3s;
+}
+
+
+/* ======================================================
+   INFORMATION GROUP ANALYSIS
+====================================================== */
+
+.info-analysis {
+  padding: 22px;
+}
+
+
+.info-card {
+  padding: 20px 0;
+
+  border-bottom: 1px solid var(--line);
+}
+
+
+.info-card:last-child {
+  border-bottom: 0;
+}
+
+
+.info-title {
+  font-weight: 800;
+
+  margin-bottom: 15px;
+}
+
+
+.info-metrics {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+
+.info-metric {
+  background: var(--soft);
+
+  border-radius: 12px;
+
+  padding: 14px;
+}
+
+
+.info-metric-label {
+  display: block;
+
+  color: var(--sub);
+
+  font-size: 11px;
+
+  margin-bottom: 7px;
+}
+
+
+.info-metric-value {
+  font-size: 18px;
+
+  font-weight: 800;
+}
+
+
+/* ======================================================
+   FUNNEL
+====================================================== */
+
+.funnel-container {
+  padding: 24px;
+}
+
+
+.funnel-item {
+  margin-bottom: 22px;
+}
+
+
+.funnel-item:last-child {
+  margin-bottom: 0;
+}
+
+
+.funnel-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-bottom: 8px;
+}
+
+
+.funnel-name {
+  font-weight: 700;
+}
+
+
+.funnel-number {
+  color: var(--sub);
+
+  font-size: 13px;
+}
+
+
+.funnel-bar {
+  height: 12px;
+
+  background: #eceef1;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+
+.funnel-fill {
+  height: 100%;
+
+  background: #111111;
+
+  border-radius: 999px;
+}
+
+
+/* ======================================================
+   RAW DATA TABLE
+====================================================== */
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+
+.data-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 1100px;
+}
+
+
+.data-table th,
+.data-table td {
+  padding: 13px 15px;
+
+  border-bottom: 1px solid var(--line);
+
+  text-align: left;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+
+.data-table th {
+  background: #fafafa;
+
+  color: var(--sub);
+
+  font-weight: 700;
+
+  position: sticky;
+  top: 0;
+}
+
+
+.data-table td {
+  background: #ffffff;
+}
+
+
+.status {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 5px 9px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+
+.status.completed {
+  background: #e7f7ef;
+  color: var(--green);
+}
+
+
+.status.started {
+  background: #fff1e7;
+  color: #d46b28;
+}
+
+
+/* ======================================================
+   EMPTY / LOADING
+====================================================== */
+
+.center-message {
+  padding: 60px 20px;
+
+  text-align: center;
+
+  color: var(--sub);
+}
+
+
+.loading {
+  font-size: 14px;
+}
+
+
+/* ======================================================
+   FOOTER
+====================================================== */
+
+.dashboard-footer {
+  margin-top: 40px;
+
+  text-align: center;
+
+  color: #999;
+
+  font-size: 12px;
+}
+
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width: 1000px) {
+
+  .stat-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .product-row {
+    grid-template-columns:
+      80px
+      1fr
+      80px
+      80px
+      100px
+      120px;
+  }
+
+
+  .info-metrics {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .admin-header {
+    padding: 17px 20px;
+  }
+
+
+  .admin-title {
+    display: none;
+  }
+
+
+  .admin-container {
+    width: min(100% - 24px, 1400px);
+
+    padding-top: 24px;
+  }
+
+
+  .page-heading h1 {
+    font-size: 25px;
+  }
+
+
+  .stat-grid {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+  }
+
+
+  .stat-card {
+    padding: 17px;
+  }
+
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+
+  .header-button {
+    padding: 8px 11px;
+
+    font-size: 12px;
+  }
+
+
+  .product-analysis,
+  .info-analysis,
+  .funnel-container {
+    padding: 16px;
+  }
+
+}
