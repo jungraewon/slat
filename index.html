@@ -1,104 +1,149 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NOVA 스마트폰 스토어</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NOVA 스마트폰 구매 실험</title>
+
+  <link rel="stylesheet" href="./src/style.css">
 </head>
 
 <body>
 
-  <!-- 시작 화면 -->
-  <section id="startScreen" class="screen start-screen">
-    <div class="start-content">
-      <div class="brand">NOVA</div>
+  <section id="startScreen" class="screen">
+
+    <div class="start-card">
+
+      <div class="logo">NOVA</div>
 
       <h1>스마트폰 구매 실험</h1>
 
-      <p>
-        여러 스마트폰의 정보를 확인한 후<br />
+      <p class="start-description">
+        여러 스마트폰을 비교한 후<br>
         가장 구매하고 싶은 상품을 선택해주세요.
       </p>
 
-      <div class="notice">
-        <span>✓</span> 모든 상품은 가상의 상품입니다.
-        <br />
-        <span>✓</span> 원하는 만큼 상품을 비교할 수 있습니다.
+      <div class="notice-box">
+
+        <p>✓ 모든 상품은 가상의 상품입니다.</p>
+
+        <p>✓ 원하는 만큼 상품을 비교할 수 있습니다.</p>
+
       </div>
 
-      <button id="startButton" class="primary-button">
+      <button
+        id="startButton"
+        class="button button-primary"
+      >
         쇼핑 시작하기
       </button>
+
     </div>
+
   </section>
 
 
-  <!-- 쇼핑몰 화면 -->
-  <section id="shopScreen" class="screen hidden">
+  <section
+    id="shopScreen"
+    class="screen hidden"
+  >
 
-    <header class="shop-header">
+    <header class="header">
+
       <div class="header-inner">
-        <div class="brand">NOVA</div>
+
+        <div class="header-logo">
+          NOVA
+        </div>
 
         <div class="header-title">
           스마트폰
         </div>
 
-        <div class="experiment-badge">
+        <div class="header-badge">
           구매 실험
         </div>
+
       </div>
+
     </header>
 
-    <main class="shop-main">
 
-      <div class="shop-intro">
+    <main class="shop-container">
+
+      <div class="page-heading">
+
         <h2>스마트폰</h2>
-        <p>원하는 상품을 자유롭게 비교해보세요.</p>
+
+        <p>
+          원하는 상품을 자유롭게 비교해보세요.
+        </p>
+
       </div>
 
-      <div id="productGrid" class="product-grid">
-        <!-- JavaScript에서 상품 카드 생성 -->
-      </div>
+      <div
+        id="productGrid"
+        class="product-grid"
+      ></div>
 
     </main>
 
   </section>
 
 
-  <!-- 상세 페이지 -->
-  <section id="detailScreen" class="screen hidden">
+  <section
+    id="detailScreen"
+    class="screen hidden"
+  >
 
-    <header class="shop-header">
+    <header class="header">
+
       <div class="header-inner">
-        <button id="backButton" class="back-button">
+
+        <button
+          id="backButton"
+          class="back-button"
+        >
           ← 상품 목록
         </button>
 
-        <div class="brand">NOVA</div>
+        <div class="header-logo">
+          NOVA
+        </div>
 
         <div></div>
+
       </div>
+
     </header>
 
-    <main id="detailContainer" class="detail-main">
-      <!-- JavaScript에서 상세 페이지 생성 -->
-    </main>
+
+    <main
+      id="detailContainer"
+      class="detail-container"
+    ></main>
 
   </section>
 
 
-  <!-- 선택 확인 모달 -->
-  <div id="confirmModal" class="modal-overlay hidden">
+  <div
+    id="confirmModal"
+    class="modal hidden"
+  >
 
-    <div class="confirm-modal">
+    <div class="modal-card">
 
-      <button id="closeModal" class="modal-close">
+      <button
+        id="closeModal"
+        class="modal-close"
+      >
         ×
       </button>
 
-      <div class="modal-icon">🛒</div>
+      <div class="modal-icon">
+        🛒
+      </div>
 
       <h3 id="confirmTitle">
         이 상품을 선택하시겠습니까?
@@ -109,13 +154,21 @@
       </p>
 
       <div class="modal-buttons">
-        <button id="cancelButton" class="secondary-button">
+
+        <button
+          id="cancelButton"
+          class="button button-secondary"
+        >
           취소
         </button>
 
-        <button id="confirmButton" class="primary-button">
+        <button
+          id="confirmButton"
+          class="button button-primary"
+        >
           선택하기
         </button>
+
       </div>
 
     </div>
@@ -123,16 +176,20 @@
   </div>
 
 
-  <!-- 종료 화면 -->
-  <section id="completeScreen" class="screen hidden complete-screen">
+  <section
+    id="completeScreen"
+    class="screen hidden"
+  >
 
-    <div class="complete-content">
+    <div class="complete-card">
 
       <div class="complete-icon">
         ✓
       </div>
 
-      <h1>선택이 완료되었습니다.</h1>
+      <h1>
+        선택이 완료되었습니다.
+      </h1>
 
       <p>
         실험에 참여해주셔서 감사합니다.
@@ -147,7 +204,10 @@
   </section>
 
 
-  <script type="module" src="/src/main.js"></script>
+  <script
+    type="module"
+    src="./src/main.js"
+  ></script>
 
 </body>
 </html>
