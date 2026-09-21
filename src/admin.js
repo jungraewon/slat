@@ -2,17 +2,17 @@ import { supabase } from "./supabase.js";
 import "./admin.css";
 
 // ======================================================
-// NOVA 관리자 대시보드 - 최종 분석 그래프 5개
+// INSITE 관리자 대시보드 - 최종 분석 그래프 5개
 // ======================================================
 
 const products = [
-  { id: "A", name: "NOVA S1", info: ["리뷰"] },
-  { id: "B", name: "NOVA S2", info: ["별점"] },
-  { id: "C", name: "NOVA S3", info: ["품질정보"] },
-  { id: "D", name: "NOVA S4", info: ["리뷰", "별점"] },
-  { id: "E", name: "NOVA S5", info: ["리뷰", "품질정보"] },
-  { id: "F", name: "NOVA S6", info: ["별점", "품질정보"] },
-  { id: "G", name: "NOVA S7", info: ["리뷰", "별점", "품질정보"] }
+  { id: "A", name: "IN S1", info: ["리뷰"] },
+  { id: "B", name: "IN S2", info: ["별점"] },
+  { id: "C", name: "IN S3", info: ["품질정보"] },
+  { id: "D", name: "IN S4", info: ["리뷰", "별점"] },
+  { id: "E", name: "IN S5", info: ["리뷰", "품질정보"] },
+  { id: "F", name: "IN S6", info: ["별점", "품질정보"] },
+  { id: "G", name: "IN S7", info: ["리뷰", "별점", "품질정보"] }
 ];
 
 const app = document.querySelector("#admin-app");
@@ -34,9 +34,8 @@ function completedRows() {
   );
 }
 
-// 선택시간 분석 기준
 // 300초(5분) 초과 데이터는 원본 DB에는 남겨두고
-// 시간 분석에서만 제외한다.
+// 시간 분석에서만 제외
 const MAX_VALID_DECISION_TIME = 300;
 
 function validTimeRows() {
@@ -58,8 +57,8 @@ function getProduct(id) {
 function getViews(row, id) {
   return Number(
     row[`${id.toLowerCase()}_detail_views`] ??
-    row[`${id}_detail_views`] ??
-    0
+      row[`${id}_detail_views`] ??
+      0
   );
 }
 
@@ -286,7 +285,6 @@ function graph1Data() {
   ];
 
   return groups.map(group => {
-
     const selected =
       rows.filter(row =>
         group.test(
@@ -601,7 +599,6 @@ function renderBarChart({
 
       return `
         <g>
-
           <rect
             x="${x}"
             y="${y}"
@@ -631,7 +628,6 @@ function renderBarChart({
           >
             ${item.label}
           </text>
-
         </g>
       `;
     })
@@ -641,10 +637,9 @@ function renderBarChart({
     <svg
       id="${id}"
       viewBox="0 0 ${width} ${height}"
-      class="nova-chart"
+      class="insite-chart"
       role="img"
     >
-
       ${grid}
 
       <line
@@ -656,7 +651,6 @@ function renderBarChart({
       />
 
       ${bars}
-
     </svg>
   `;
 }
@@ -723,7 +717,7 @@ function renderScatterChart({
       (value - xMin) /
       (xMax - xMin)
     ) *
-      chartW;
+    chartW;
 
   const y = value =>
     top +
@@ -732,13 +726,13 @@ function renderScatterChart({
       (value - yMin) /
       (yMax - yMin)
     ) *
-      chartH;
+    chartH;
 
   let svg = `
     <svg
       id="${id}"
       viewBox="0 0 ${width} ${height}"
-      class="nova-chart"
+      class="insite-chart"
       role="img"
     >
   `;
@@ -750,7 +744,7 @@ function renderScatterChart({
         (yMax - yMin) /
         5
       ) *
-        i;
+      i;
 
     const yy = y(value);
 
@@ -877,7 +871,6 @@ function renderScatterChart({
       >
         ${yLabel}
       </text>
-
     </svg>
   `;
 
@@ -915,7 +908,7 @@ function renderProbabilityScatter(data) {
       (v - xMin) /
       (xMax - xMin)
     ) *
-      chartW;
+    chartW;
 
   const y = v =>
     top +
@@ -924,7 +917,7 @@ function renderProbabilityScatter(data) {
       (v - yMin) /
       (yMax - yMin)
     ) *
-      chartH;
+    chartH;
 
   const points =
     data.map(d => ({
@@ -938,7 +931,7 @@ function renderProbabilityScatter(data) {
   let svg = `
     <svg
       viewBox="0 0 ${width} ${height}"
-      class="nova-chart"
+      class="insite-chart"
       role="img"
     >
   `;
@@ -1077,7 +1070,6 @@ function renderProbabilityScatter(data) {
     >
       상품 선택확률 (%)
     </text>
-
   </svg>
   `;
 
@@ -1159,21 +1151,20 @@ function renderDashboard() {
     ).length;
 
   app.innerHTML = `
-
-    <div class="admin-page nova-graph-page">
+    <div class="admin-page insite-admin-page">
 
       <header class="admin-header">
 
         <div class="logo-area">
 
           <div class="logo">
-            NOVA
+            INSITE
           </div>
 
           <div class="logo-divider"></div>
 
           <div class="admin-title">
-            실험 분석 그래프
+            관리자 대시보드
           </div>
 
         </div>
@@ -1198,13 +1189,16 @@ function renderDashboard() {
 
       </header>
 
-
       <main class="admin-container">
 
         <div class="page-heading">
 
+          <div class="page-kicker">
+            INSITE EXPERIMENT
+          </div>
+
           <h1>
-            NOVA 실험 분석
+            스마트폰 구매 실험 분석
           </h1>
 
           <p>
@@ -1213,7 +1207,6 @@ function renderDashboard() {
           </p>
 
         </div>
-
 
         <section class="stat-grid">
 
@@ -1235,7 +1228,6 @@ function renderDashboard() {
 
           </div>
 
-
           <div class="stat-card">
 
             <div class="stat-label">
@@ -1254,7 +1246,6 @@ function renderDashboard() {
 
           </div>
 
-
           <div class="stat-card">
 
             <div class="stat-label">
@@ -1272,7 +1263,6 @@ function renderDashboard() {
             </div>
 
           </div>
-
 
           <div class="stat-card">
 
@@ -1294,7 +1284,6 @@ function renderDashboard() {
 
         </section>
 
-
         <!-- 그래프 1 -->
 
         <section
@@ -1313,7 +1302,6 @@ function renderDashboard() {
 
           </div>
 
-
           <div class="card graph-card">
 
             ${renderBarChart({
@@ -1324,7 +1312,6 @@ function renderDashboard() {
           </div>
 
         </section>
-
 
         <!-- 그래프 2 -->
 
@@ -1346,7 +1333,6 @@ function renderDashboard() {
 
           </div>
 
-
           <div class="card graph-card">
 
             ${renderBarChart({
@@ -1357,7 +1343,6 @@ function renderDashboard() {
           </div>
 
         </section>
-
 
         <!-- 그래프 3 -->
 
@@ -1379,30 +1364,21 @@ function renderDashboard() {
 
           </div>
 
-
           <div class="card graph-card">
 
             ${
               g3.length
-
                 ? renderScatterChart({
                     id: "graph3",
-
                     points: g3,
-
                     xMin: 0.5,
-
                     xMax: 3.5,
-
                     yLabel:
                       "선택시간 (초)",
-
                     xLabel:
                       "최종 선택 상품의 정보 개수",
-
                     xTicks:
                       [1, 2, 3],
-
                     showTrend:
                       true
                   })
@@ -1416,7 +1392,6 @@ function renderDashboard() {
 
           </div>
 
-
           <div class="model-box">
 
             ${regressionText(g3)}
@@ -1424,7 +1399,6 @@ function renderDashboard() {
           </div>
 
         </section>
-
 
         <!-- 그래프 4 -->
 
@@ -1445,13 +1419,11 @@ function renderDashboard() {
 
           </div>
 
-
           <div class="card graph-card">
 
             ${renderProbabilityScatter(g4)}
 
           </div>
-
 
           <div class="model-box">
 
@@ -1460,7 +1432,6 @@ function renderDashboard() {
           </div>
 
         </section>
-
 
         <!-- 그래프 5 -->
 
@@ -1482,7 +1453,6 @@ function renderDashboard() {
 
           </div>
 
-
           <div class="card graph-card">
 
             ${renderBarChart({
@@ -1494,7 +1464,7 @@ function renderDashboard() {
 
         </section>
 
-                <div class="analysis-note">
+        <div class="analysis-note">
 
           <strong>
             분석 기준
@@ -1519,16 +1489,14 @@ function renderDashboard() {
 
         </div>
 
-
         <div class="dashboard-footer">
-          NOVA Smartphone Purchase Experiment
+          INSITE Smartphone Purchase Experiment
         </div>
 
       </main>
 
     </div>
   `;
-
 
   document
     .querySelector(
@@ -1538,7 +1506,6 @@ function renderDashboard() {
       "click",
       loadData
     );
-
 
   document
     .querySelector(
@@ -1556,14 +1523,10 @@ function renderDashboard() {
 
 function renderLoading() {
   app.innerHTML = `
-
     <div class="loading">
-
       실험 데이터를
       불러오는 중입니다...
-
     </div>
-
   `;
 }
 
@@ -1573,7 +1536,6 @@ function renderLoading() {
 
 function renderError(error) {
   app.innerHTML = `
-
     <div class="error-card">
 
       <h2>
@@ -1596,9 +1558,7 @@ function renderError(error) {
       </button>
 
     </div>
-
   `;
-
 
   document
     .querySelector(
@@ -1615,9 +1575,7 @@ function renderError(error) {
 // ======================================================
 
 function downloadCSV() {
-
   if (!experimentData.length) {
-
     alert(
       "다운로드할 데이터가 없습니다."
     );
@@ -1625,13 +1583,9 @@ function downloadCSV() {
     return;
   }
 
-
   const headers = [
-
     "participant_id",
-
     "status",
-
     "final_choice",
 
     "a_detail_visited",
@@ -1655,17 +1609,12 @@ function downloadCSV() {
     "decision_time",
 
     "started_at",
-
     "completed_at",
-
     "created_at"
-
   ];
-
 
   const rows =
     experimentData.map(row => [
-
       row.participant_id,
 
       row.status,
@@ -1697,16 +1646,11 @@ function downloadCSV() {
       row.completed_at,
 
       row.created_at
-
     ]);
 
-
   const csv = [
-
     headers,
-
     ...rows
-
   ]
     .map(row =>
       row
@@ -1722,42 +1666,34 @@ function downloadCSV() {
     )
     .join("\n");
 
-
   const blob =
     new Blob(
-
       [
         "\uFEFF" +
         csv
       ],
-
       {
         type:
           "text/csv;charset=utf-8;"
       }
-
     );
-
 
   const url =
     URL.createObjectURL(
       blob
     );
 
-
   const link =
     document.createElement(
       "a"
     );
 
-
   link.href = url;
 
   link.download =
-    `NOVA_experiment_data_${new Date()
+    `INSITE_experiment_data_${new Date()
       .toISOString()
       .slice(0, 10)}.csv`;
-
 
   document.body.appendChild(
     link
@@ -1768,7 +1704,6 @@ function downloadCSV() {
   document.body.removeChild(
     link
   );
-
 
   URL.revokeObjectURL(
     url
@@ -1784,297 +1719,194 @@ const style =
     "style"
   );
 
-
 style.textContent = `
 
-  .nova-graph-page
+  .insite-admin-page
   .graph-section {
-
     margin-bottom: 58px;
-
   }
 
-
-  .nova-graph-page
+  .insite-admin-page
   .graph-card {
-
     padding:
       18px 22px 12px;
-
     overflow-x:
       auto;
-
   }
 
-
-  .nova-chart {
-
+  .insite-chart {
     width: 100%;
-
     min-width:
       680px;
-
     height: auto;
-
     display: block;
-
   }
-
 
   .chart-grid {
-
     stroke:
       #e5e7eb;
-
     stroke-width:
       1;
-
   }
-
 
   .chart-grid.vertical {
-
     opacity:
       .45;
-
   }
-
 
   .chart-axis-line {
-
     stroke:
       #9ca3af;
-
     stroke-width:
       1.2;
-
   }
-
 
   .chart-axis {
-
     fill:
       #9ca3af;
-
     font-size:
       11px;
-
   }
-
 
   .chart-label {
-
     fill:
       #4b5563;
-
     font-size:
       12px;
-
     font-weight:
       700;
-
   }
-
 
   .chart-value {
-
     fill:
       #111827;
-
     font-size:
       11px;
-
     font-weight:
       800;
-
   }
-
 
   .axis-title {
-
     fill:
       #6b7280;
-
     font-size:
       12px;
-
     font-weight:
       700;
-
   }
-
 
   .chart-bar {
-
     fill:
-      #111827;
-
+      #e53935;
     transition:
       opacity .15s;
-
   }
-
 
   .chart-bar:hover {
-
     opacity:
       .72;
-
   }
-
 
   .scatter-point {
-
     fill:
-      #111827;
-
+      #e53935;
     stroke:
       #ffffff;
-
     stroke-width:
       2;
-
   }
-
 
   .trend-line {
-
     stroke:
-      #6b7280;
-
+      #e53935;
     stroke-width:
       2.5;
-
     stroke-dasharray:
       7 5;
-
   }
-
 
   .model-box {
-
     margin-top:
       10px;
-
     background:
       #ffffff;
-
     border:
       1px solid #e5e7eb;
-
     border-radius:
-      12px;
-
+      10px;
     padding:
       14px 17px;
-
     color:
       #6b7280;
-
     font-size:
       13px;
-
   }
-
 
   .model-box strong {
-
     color:
       #111827;
-
   }
-
 
   .analysis-note {
-
     margin-top:
       10px;
-
     padding:
       16px 18px;
-
     background:
       #ffffff;
-
     border:
       1px solid #e5e7eb;
-
     border-radius:
-      12px;
-
+      10px;
     color:
       #6b7280;
-
     font-size:
       12px;
-
     line-height:
       1.75;
-
   }
-
 
   .analysis-note strong {
-
     color:
       #111827;
-
   }
-
 
   .analysis-note code {
-
     background:
       #f3f4f6;
-
     padding:
       2px 5px;
-
     border-radius:
       4px;
-
   }
-
 
   .empty-chart {
-
     height:
       350px;
-
     display:
       grid;
-
     place-items:
       center;
-
     color:
       #9ca3af;
-
   }
-
 
   @media (max-width: 760px) {
 
-    .nova-graph-page
+    .insite-admin-page
     .graph-card {
-
       padding:
         10px;
-
     }
 
-
-    .nova-chart {
-
+    .insite-chart {
       min-width:
         620px;
-
     }
 
   }
 
 `;
-
 
 document.head.appendChild(
   style
