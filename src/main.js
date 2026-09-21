@@ -26,6 +26,7 @@ const products = {
     id: "A",
     name: "IN S1",
     price: 699000,
+    discountRate: 32,
     showReviews: true,
     showRating: false,
     showSpecs: false
@@ -35,6 +36,7 @@ const products = {
     id: "B",
     name: "IN S2",
     price: 699000,
+    discountRate: 30,
     showReviews: false,
     showRating: true,
     showSpecs: false
@@ -44,6 +46,7 @@ const products = {
     id: "C",
     name: "IN S3",
     price: 699000,
+    discountRate: 29,
     showReviews: false,
     showRating: false,
     showSpecs: true
@@ -53,6 +56,7 @@ const products = {
     id: "D",
     name: "IN S4",
     price: 699000,
+    discountRate: 30,
     showReviews: true,
     showRating: true,
     showSpecs: false
@@ -62,6 +66,7 @@ const products = {
     id: "E",
     name: "IN S5",
     price: 699000,
+    discountRate: 31,
     showReviews: true,
     showRating: false,
     showSpecs: true
@@ -71,6 +76,7 @@ const products = {
     id: "F",
     name: "IN S6",
     price: 699000,
+    discountRate: 28,
     showReviews: false,
     showRating: true,
     showSpecs: true
@@ -80,11 +86,23 @@ const products = {
     id: "G",
     name: "IN S7",
     price: 699000,
+    discountRate: 27,
     showReviews: true,
     showRating: true,
     showSpecs: true
   }
 };
+
+
+// ======================================================
+// 할인 정가 계산
+// ======================================================
+
+function getOriginalPrice(product) {
+  return Math.round(
+    product.price / (1 - product.discountRate / 100)
+  );
+}
 
 
 // ======================================================
@@ -343,11 +361,13 @@ function renderProductList() {
 
     card.className = "product-card";
 
+    const originalPrice = getOriginalPrice(product);
+
     card.innerHTML = `
       <div class="product-image-area">
 
         <div class="product-badge">
-          30% 할인
+          ${product.discountRate}% 할인
         </div>
 
         <div class="phone">
@@ -373,11 +393,11 @@ function renderProductList() {
         <div class="discount-info">
 
           <span class="discount-rate">
-            30%
+            ${product.discountRate}%
           </span>
 
           <span class="original-price">
-            999,000원
+            ${originalPrice.toLocaleString("ko-KR")}원
           </span>
 
         </div>
@@ -492,6 +512,7 @@ async function saveDetailView(productId) {
 
   detailVisited[productId] =
     true;
+
 
   detailViewSequence.push(
     productId
@@ -622,6 +643,9 @@ function renderProductDetail(
     "detail-card";
 
 
+  const originalPrice = getOriginalPrice(product);
+
+
   let html = `
 
     <div class="detail-product">
@@ -629,7 +653,7 @@ function renderProductDetail(
       <div class="detail-phone-area">
 
         <div class="detail-discount-badge">
-          30% 할인
+          ${product.discountRate}% 할인
         </div>
 
         <div class="phone large">
@@ -658,11 +682,11 @@ function renderProductDetail(
         <div class="discount-info detail-discount">
 
           <span class="discount-rate">
-            30%
+            ${product.discountRate}%
           </span>
 
           <span class="original-price">
-            999,000원
+            ${originalPrice.toLocaleString("ko-KR")}원
           </span>
 
         </div>
@@ -922,21 +946,21 @@ function renderProductDetail(
 
   html += `
 
-    </div>
+      </div>
 
 
-    <div class="detail-action">
+      <div class="detail-action">
 
-      <button
-        type="button"
-        id="selectProductButton"
-        class="button button-primary select-button"
-      >
-        이 상품을 선택하기
-        <span class="button-arrow">›</span>
-      </button>
+        <button
+          type="button"
+          id="selectProductButton"
+          class="button button-primary select-button"
+        >
+          이 상품을 선택하기
+          <span class="button-arrow">›</span>
+        </button>
 
-    </div>
+      </div>
 
   `;
 
