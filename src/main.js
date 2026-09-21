@@ -1,18 +1,16 @@
 import "./style.css";
 import { supabase } from "./supabase.js";
 
-
 // ======================================================
-// NOVA 스마트폰 구매 실험
+// INSITE 스마트폰 구매 실험
 // ======================================================
-//
-// A / S1 : 리뷰
-// B / S2 : 별점
-// C / S3 : 사양 + 내구성
-// D / S4 : 리뷰 + 별점
-// E / S5 : 리뷰 + 사양 + 내구성
-// F / S6 : 별점 + 사양 + 내구성
-// G / S7 : 리뷰 + 별점 + 사양 + 내구성
+// A / IN S1 : 리뷰
+// B / IN S2 : 별점
+// C / IN S3 : 사양 + 내구성
+// D / IN S4 : 리뷰 + 별점
+// E / IN S5 : 리뷰 + 사양 + 내구성
+// F / IN S6 : 별점 + 사양 + 내구성
+// G / IN S7 : 리뷰 + 별점 + 사양 + 내구성
 //
 // 모든 상품의 실제 정보값은 동일하다.
 // 차이는 어떤 정보를 보여주는가뿐이다.
@@ -24,12 +22,10 @@ import { supabase } from "./supabase.js";
 // ======================================================
 
 const products = {
-
   A: {
     id: "A",
-    name: "NOVA S1",
+    name: "IN S1",
     price: 699000,
-
     showReviews: true,
     showRating: false,
     showSpecs: false
@@ -37,9 +33,8 @@ const products = {
 
   B: {
     id: "B",
-    name: "NOVA S2",
+    name: "IN S2",
     price: 699000,
-
     showReviews: false,
     showRating: true,
     showSpecs: false
@@ -47,9 +42,8 @@ const products = {
 
   C: {
     id: "C",
-    name: "NOVA S3",
+    name: "IN S3",
     price: 699000,
-
     showReviews: false,
     showRating: false,
     showSpecs: true
@@ -57,9 +51,8 @@ const products = {
 
   D: {
     id: "D",
-    name: "NOVA S4",
+    name: "IN S4",
     price: 699000,
-
     showReviews: true,
     showRating: true,
     showSpecs: false
@@ -67,9 +60,8 @@ const products = {
 
   E: {
     id: "E",
-    name: "NOVA S5",
+    name: "IN S5",
     price: 699000,
-
     showReviews: true,
     showRating: false,
     showSpecs: true
@@ -77,9 +69,8 @@ const products = {
 
   F: {
     id: "F",
-    name: "NOVA S6",
+    name: "IN S6",
     price: 699000,
-
     showReviews: false,
     showRating: true,
     showSpecs: true
@@ -87,14 +78,12 @@ const products = {
 
   G: {
     id: "G",
-    name: "NOVA S7",
+    name: "IN S7",
     price: 699000,
-
     showReviews: true,
     showRating: true,
     showSpecs: true
   }
-
 };
 
 
@@ -103,7 +92,6 @@ const products = {
 // ======================================================
 
 const commonInfo = {
-
   rating: 4.5,
 
   durability: 4,
@@ -119,7 +107,6 @@ const commonInfo = {
     "사용하면서 특별히 불편한 점은 없었어요.",
     "가격 대비 괜찮은 선택이라고 생각합니다."
   ]
-
 };
 
 
@@ -128,24 +115,15 @@ const commonInfo = {
 // ======================================================
 
 function generateParticipantId() {
-
   return (
     "P-" +
-    Date.now()
-      .toString(36)
-      .toUpperCase() +
+    Date.now().toString(36).toUpperCase() +
     "-" +
-    Math.random()
-      .toString(36)
-      .substring(2, 7)
-      .toUpperCase()
+    Math.random().toString(36).substring(2, 7).toUpperCase()
   );
-
 }
 
-
-let participantId =
-  generateParticipantId();
+let participantId = generateParticipantId();
 
 
 // ======================================================
@@ -153,9 +131,7 @@ let participantId =
 // ======================================================
 
 let experimentStartTime = null;
-
 let selectedProductId = null;
-
 let experimentRowId = null;
 
 
@@ -164,7 +140,6 @@ let experimentRowId = null;
 // ======================================================
 
 let detailVisited = {
-
   A: false,
   B: false,
   C: false,
@@ -172,7 +147,6 @@ let detailVisited = {
   E: false,
   F: false,
   G: false
-
 };
 
 
@@ -181,7 +155,6 @@ let detailVisited = {
 // ======================================================
 
 let detailViews = {
-
   A: 0,
   B: 0,
   C: 0,
@@ -189,7 +162,6 @@ let detailViews = {
   E: 0,
   F: 0,
   G: 0
-
 };
 
 
@@ -204,122 +176,45 @@ let detailViewSequence = [];
 // DOM
 // ======================================================
 
-const startScreen =
-  document.getElementById(
-    "startScreen"
-  );
+const startScreen = document.getElementById("startScreen");
+const shopScreen = document.getElementById("shopScreen");
+const detailScreen = document.getElementById("detailScreen");
+const completeScreen = document.getElementById("completeScreen");
 
-const shopScreen =
-  document.getElementById(
-    "shopScreen"
-  );
+const startButton = document.getElementById("startButton");
+const productGrid = document.getElementById("productGrid");
 
-const detailScreen =
-  document.getElementById(
-    "detailScreen"
-  );
+const backButton = document.getElementById("backButton");
+const detailContainer = document.getElementById("detailContainer");
 
-const completeScreen =
-  document.getElementById(
-    "completeScreen"
-  );
-
-
-const startButton =
-  document.getElementById(
-    "startButton"
-  );
-
-
-const productGrid =
-  document.getElementById(
-    "productGrid"
-  );
-
-
-const backButton =
-  document.getElementById(
-    "backButton"
-  );
-
-
-const detailContainer =
-  document.getElementById(
-    "detailContainer"
-  );
-
-
-const confirmModal =
-  document.getElementById(
-    "confirmModal"
-  );
-
-
-const confirmTitle =
-  document.getElementById(
-    "confirmTitle"
-  );
-
-
-const cancelButton =
-  document.getElementById(
-    "cancelButton"
-  );
-
-
-const closeModalButton =
-  document.getElementById(
-    "closeModal"
-  );
-
-
-const confirmButton =
-  document.getElementById(
-    "confirmButton"
-  );
+const confirmModal = document.getElementById("confirmModal");
+const confirmTitle = document.getElementById("confirmTitle");
+const cancelButton = document.getElementById("cancelButton");
+const closeModalButton = document.getElementById("closeModal");
+const confirmButton = document.getElementById("confirmButton");
 
 
 // ======================================================
 // 화면 전환
 // ======================================================
 
-function showScreen(
-  screenToShow
-) {
-
+function showScreen(screenToShow) {
   const screens = [
-
     startScreen,
     shopScreen,
     detailScreen,
     completeScreen
-
   ];
 
+  screens.forEach((screen) => {
+    if (!screen) return;
 
-  screens.forEach(
-    (screen) => {
-
-      if (!screen) {
-        return;
-      }
-
-      screen.classList.add(
-        "hidden"
-      );
-
-    }
-  );
-
+    screen.classList.add("hidden");
+  });
 
   if (screenToShow) {
-
-    screenToShow.classList.remove(
-      "hidden"
-    );
-
+    screenToShow.classList.remove("hidden");
   }
-
 }
 
 
@@ -328,14 +223,10 @@ function showScreen(
 // ======================================================
 
 function resetExperimentState() {
-
   selectedProductId = null;
-
   experimentRowId = null;
 
-
   detailVisited = {
-
     A: false,
     B: false,
     C: false,
@@ -343,12 +234,9 @@ function resetExperimentState() {
     E: false,
     F: false,
     G: false
-
   };
 
-
   detailViews = {
-
     A: 0,
     B: 0,
     C: 0,
@@ -356,12 +244,9 @@ function resetExperimentState() {
     E: 0,
     F: 0,
     G: 0
-
   };
 
-
   detailViewSequence = [];
-
 }
 
 
@@ -370,52 +255,25 @@ function resetExperimentState() {
 // ======================================================
 
 async function startExperiment() {
-
   resetExperimentState();
 
+  experimentStartTime = Date.now();
+  participantId = generateParticipantId();
 
-  experimentStartTime =
-    Date.now();
-
-
-  participantId =
-    generateParticipantId();
-
-
-  console.log(
-    "NOVA 실험 시작"
-  );
-
-
-  console.log(
-    "참가자 ID:",
-    participantId
-  );
-
-
-  // ====================================================
-  // Supabase에 실험 시작 기록 생성
-  // ====================================================
+  console.log("INSITE 실험 시작");
+  console.log("참가자 ID:", participantId);
 
   const startData = {
+    participant_id: participantId,
 
-    participant_id:
-      participantId,
+    final_choice: null,
 
-    final_choice:
-      null,
+    status: "started",
 
-    status:
-      "started",
+    started_at: new Date().toISOString(),
 
-    started_at:
-      new Date().toISOString(),
+    completed_at: null,
 
-    completed_at:
-      null,
-
-
-    // 방문 여부
     a_detail_visited: false,
     b_detail_visited: false,
     c_detail_visited: false,
@@ -424,8 +282,6 @@ async function startExperiment() {
     f_detail_visited: false,
     g_detail_visited: false,
 
-
-    // 조회 횟수
     a_detail_views: 0,
     b_detail_views: 0,
     c_detail_views: 0,
@@ -434,92 +290,42 @@ async function startExperiment() {
     f_detail_views: 0,
     g_detail_views: 0,
 
-
-    // 조회 순서
     detail_view_sequence: [],
 
-
-    // 결정 시간
     decision_time: 0
-
   };
 
-
-  console.log(
-    "Supabase에 실험 시작 데이터를 저장하는 중..."
-  );
-
-
-  const {
-    data,
-    error
-  } = await supabase
-
-    .from(
-      "experiment_data"
-    )
-
-    .insert(
-      startData
-    )
-
-    .select(
-      "id"
-    )
-
+  const { data, error } = await supabase
+    .from("experiment_data")
+    .insert(startData)
+    .select("id")
     .single();
 
-
   if (error) {
-
     console.error(
       "실험 시작 데이터 저장 실패:",
       error
     );
-
 
     alert(
       "실험을 시작할 수 없습니다.\n\n" +
       "데이터베이스 연결 상태를 확인해주세요."
     );
 
-
     return;
-
   }
 
-
-  experimentRowId =
-    data.id;
-
+  experimentRowId = data.id;
 
   console.log(
     "실험 시작 데이터 저장 완료"
   );
 
-
-  console.log(
-    "DB row id:",
-    experimentRowId
-  );
-
-
-  // 상품 목록 생성
   renderProductList();
 
+  showScreen(shopScreen);
 
-  // 상품 목록 화면
-  showScreen(
-    shopScreen
-  );
-
-
-  // 화면 위쪽으로 이동
-  window.scrollTo(
-    0,
-    0
-  );
-
+  window.scrollTo(0, 0);
 }
 
 
@@ -528,93 +334,113 @@ async function startExperiment() {
 // ======================================================
 
 function renderProductList() {
-
-  if (!productGrid) {
-    return;
-  }
-
+  if (!productGrid) return;
 
   productGrid.innerHTML = "";
 
+  Object.values(products).forEach((product) => {
+    const card = document.createElement("article");
 
-  Object.values(
-    products
-  ).forEach(
-    (product) => {
+    card.className = "product-card";
 
-      const card =
-        document.createElement(
-          "article"
-        );
+    card.innerHTML = `
+      <div class="product-image-area">
 
+        <div class="product-badge">
+          30% 할인
+        </div>
 
-      card.className =
-        "product-card";
-
-
-      // ------------------------------------------------
-      // 상품 목록에서는 정보 노출 X
-      // ------------------------------------------------
-
-      card.innerHTML = `
-
-        <div class="phone-area">
-
-          <div class="phone">
-
-            <div class="phone-screen">
-              NOVA
-            </div>
-
-            <div class="phone-camera"></div>
-
+        <div class="phone">
+          <div class="phone-screen">
+            INSITE
           </div>
+
+          <div class="phone-camera"></div>
+        </div>
+
+      </div>
+
+      <div class="product-info">
+
+        <div class="brand-small">
+          INSITE
+        </div>
+
+        <h3>
+          ${product.name}
+        </h3>
+
+        <div class="discount-info">
+
+          <span class="discount-rate">
+            30%
+          </span>
+
+          <span class="original-price">
+            999,000원
+          </span>
 
         </div>
 
-
-        <div class="product-info">
-
-          <div class="brand-small">
-            NOVA
-          </div>
-
-
-          <h3>
-            ${product.name}
-          </h3>
-
-
-          <div class="price">
-            ${product.price.toLocaleString(
-              "ko-KR"
-            )}원
-          </div>
-
-
-          <button
-            class="button button-primary detail-button"
-            data-product-id="${product.id}"
-          >
-            상품 자세히 보기
-          </button>
-
+        <div class="price">
+          ${product.price.toLocaleString("ko-KR")}원
         </div>
 
-      `;
+        ${
+          product.showRating
+            ? `
+              <div class="product-rating">
 
+                <span class="rating-star">
+                  ★
+                </span>
 
-      productGrid.appendChild(
-        card
-      );
+                <strong>
+                  ${commonInfo.rating}
+                </strong>
 
-    }
-  );
+                <span class="rating-total">
+                  / 5.0
+                </span>
 
+              </div>
+            `
+            : ""
+        }
 
-  // ====================================================
-  // 상세보기 버튼
-  // ====================================================
+        ${
+          product.showSpecs
+            ? `
+              <div class="stock-notice">
+
+                <span class="stock-icon">
+                  ◆
+                </span>
+
+                <strong>
+                  수량 9개 남음!!
+                </strong>
+
+              </div>
+            `
+            : ""
+        }
+
+        <button
+          type="button"
+          class="button button-primary detail-button"
+          data-product-id="${product.id}"
+        >
+          상품 자세히 보기
+          <span class="button-arrow">›</span>
+        </button>
+
+      </div>
+    `;
+
+    productGrid.appendChild(card);
+  });
+
 
   const detailButtons =
     productGrid.querySelectorAll(
@@ -622,27 +448,23 @@ function renderProductList() {
     );
 
 
-  detailButtons.forEach(
-    (button) => {
+  detailButtons.forEach((button) => {
 
-      button.addEventListener(
-        "click",
-        async () => {
+    button.addEventListener(
+      "click",
+      async () => {
 
-          const productId =
-            button.dataset.productId;
+        const productId =
+          button.dataset.productId;
 
+        await openProductDetail(
+          productId
+        );
 
-          await openProductDetail(
-            productId
-          );
+      }
+    );
 
-        }
-      );
-
-    }
-  );
-
+  });
 }
 
 
@@ -650,9 +472,7 @@ function renderProductList() {
 // 상세페이지 조회 DB 저장
 // ======================================================
 
-async function saveDetailView(
-  productId
-) {
+async function saveDetailView(productId) {
 
   if (!experimentRowId) {
 
@@ -661,7 +481,6 @@ async function saveDetailView(
     );
 
     return false;
-
   }
 
 
@@ -669,41 +488,15 @@ async function saveDetailView(
     productId.toLowerCase();
 
 
-  // 조회 횟수 증가
   detailViews[productId] += 1;
 
-
-  // 방문 여부
   detailVisited[productId] =
     true;
 
-
-  // 조회 순서
   detailViewSequence.push(
     productId
   );
 
-
-  console.log(
-    `${productId} 상세페이지 조회`
-  );
-
-
-  console.log(
-    "현재 조회 횟수:",
-    detailViews[productId]
-  );
-
-
-  console.log(
-    "현재 조회 순서:",
-    detailViewSequence
-  );
-
-
-  // ====================================================
-  // 실제 DB 컬럼명은 소문자
-  // ====================================================
 
   const updateData = {
 
@@ -713,36 +506,28 @@ async function saveDetailView(
     [`${lowerId}_detail_views`]:
       detailViews[productId],
 
-    detail_view_sequence:
-      [
-        ...detailViewSequence
-      ]
+    detail_view_sequence: [
+      ...detailViewSequence
+    ]
 
   };
 
 
-  console.log(
-    "상세페이지 조회 DB 업데이트:",
-    updateData
-  );
+  const { error } =
+    await supabase
 
+      .from(
+        "experiment_data"
+      )
 
-  const {
-    error
-  } = await supabase
+      .update(
+        updateData
+      )
 
-    .from(
-      "experiment_data"
-    )
-
-    .update(
-      updateData
-    )
-
-    .eq(
-      "id",
-      experimentRowId
-    );
+      .eq(
+        "id",
+        experimentRowId
+      );
 
 
   if (error) {
@@ -752,19 +537,11 @@ async function saveDetailView(
       error
     );
 
-
     return false;
-
   }
 
 
-  console.log(
-    `${productId} 조회 기록 DB 저장 완료`
-  );
-
-
   return true;
-
 }
 
 
@@ -785,10 +562,6 @@ async function openProductDetail(
   }
 
 
-  // ----------------------------------------------------
-  // 조회 기록을 먼저 DB에 저장
-  // ----------------------------------------------------
-
   const saved =
     await saveDetailView(
       productId
@@ -802,15 +575,9 @@ async function openProductDetail(
       "잠시 후 다시 시도해주세요."
     );
 
-
     return;
-
   }
 
-
-  // ----------------------------------------------------
-  // 상세페이지 표시
-  // ----------------------------------------------------
 
   renderProductDetail(
     product
@@ -826,7 +593,6 @@ async function openProductDetail(
     0,
     0
   );
-
 }
 
 
@@ -843,8 +609,7 @@ function renderProductDetail(
   }
 
 
-  detailContainer.innerHTML =
-    "";
+  detailContainer.innerHTML = "";
 
 
   const detail =
@@ -857,21 +622,20 @@ function renderProductDetail(
     "detail-card";
 
 
-  // ====================================================
-  // 기본 상품 정보
-  // ====================================================
-
   let html = `
 
     <div class="detail-product">
 
-
       <div class="detail-phone-area">
+
+        <div class="detail-discount-badge">
+          30% 할인
+        </div>
 
         <div class="phone large">
 
           <div class="phone-screen">
-            NOVA
+            INSITE
           </div>
 
           <div class="phone-camera"></div>
@@ -884,23 +648,70 @@ function renderProductDetail(
       <div class="detail-basic">
 
         <div class="brand-small">
-          NOVA
+          INSITE
         </div>
-
 
         <h1>
           ${product.name}
         </h1>
 
+        <div class="discount-info detail-discount">
 
-        <div class="price large-price">
-          ${product.price.toLocaleString(
-            "ko-KR"
-          )}원
+          <span class="discount-rate">
+            30%
+          </span>
+
+          <span class="original-price">
+            999,000원
+          </span>
+
         </div>
 
-      </div>
+        <div class="price large-price">
+          ${product.price.toLocaleString("ko-KR")}원
+        </div>
 
+        ${
+          product.showRating
+            ? `
+              <div class="product-rating detail-rating">
+
+                <span class="rating-star">
+                  ★
+                </span>
+
+                <strong>
+                  ${commonInfo.rating}
+                </strong>
+
+                <span class="rating-total">
+                  / 5.0
+                </span>
+
+              </div>
+            `
+            : ""
+        }
+
+        ${
+          product.showSpecs
+            ? `
+              <div class="stock-notice detail-stock-notice">
+
+                <span class="stock-icon">
+                  ◆
+                </span>
+
+                <strong>
+                  수량 9개 남음!!
+                </strong>
+
+              </div>
+            `
+            : ""
+        }
+
+      </div>
 
     </div>
 
@@ -940,7 +751,6 @@ function renderProductDetail(
                   <div class="review-stars">
                     ★★★★★
                   </div>
-
 
                   <p>
                     ${review}
@@ -982,14 +792,17 @@ function renderProductDetail(
 
         <div class="rating">
 
-          <span class="rating-number">
-            ${commonInfo.rating}
-          </span>
+          <div class="rating-score">
 
+            <span class="rating-number">
+              ${commonInfo.rating}
+            </span>
 
-          <span class="rating-max">
-            / 5.0
-          </span>
+            <span class="rating-max">
+              / 5.0
+            </span>
+
+          </div>
 
 
           <div class="rating-stars">
@@ -1025,7 +838,6 @@ function renderProductDetail(
 
 
         <div class="spec-list">
-
 
           <div class="spec-row">
 
@@ -1065,12 +877,10 @@ function renderProductDetail(
 
           </div>
 
-
         </div>
 
 
         <div class="durability">
-
 
           <div class="durability-header">
 
@@ -1097,9 +907,7 @@ function renderProductDetail(
 
           </div>
 
-
         </div>
-
 
       </section>
 
@@ -1109,7 +917,7 @@ function renderProductDetail(
 
 
   // ====================================================
-  // 정보 영역 종료
+  // 선택 버튼
   // ====================================================
 
   html += `
@@ -1120,10 +928,12 @@ function renderProductDetail(
     <div class="detail-action">
 
       <button
+        type="button"
         id="selectProductButton"
         class="button button-primary select-button"
       >
         이 상품을 선택하기
+        <span class="button-arrow">›</span>
       </button>
 
     </div>
@@ -1140,19 +950,13 @@ function renderProductDetail(
   );
 
 
-  // ====================================================
-  // 선택 버튼
-  // ====================================================
-
   const selectButton =
     document.getElementById(
       "selectProductButton"
     );
 
 
-  if (
-    selectButton
-  ) {
+  if (selectButton) {
 
     selectButton.addEventListener(
       "click",
@@ -1182,9 +986,7 @@ function openConfirmModal(
     product.id;
 
 
-  if (
-    confirmTitle
-  ) {
+  if (confirmTitle) {
 
     confirmTitle.textContent =
       `${product.name}을(를) 선택하시겠습니까?`;
@@ -1192,12 +994,15 @@ function openConfirmModal(
   }
 
 
-  if (
-    confirmModal
-  ) {
+  if (confirmModal) {
 
     confirmModal.classList.remove(
       "hidden"
+    );
+
+    confirmModal.setAttribute(
+      "aria-hidden",
+      "false"
     );
 
   }
@@ -1211,12 +1016,15 @@ function openConfirmModal(
 
 function closeConfirmModal() {
 
-  if (
-    confirmModal
-  ) {
+  if (confirmModal) {
 
     confirmModal.classList.add(
       "hidden"
+    );
+
+    confirmModal.setAttribute(
+      "aria-hidden",
+      "true"
     );
 
   }
@@ -1230,31 +1038,20 @@ function closeConfirmModal() {
 
 async function finishExperiment() {
 
-  if (
-    !selectedProductId
-  ) {
-
+  if (!selectedProductId) {
     return;
-
   }
 
 
-  if (
-    !experimentRowId
-  ) {
+  if (!experimentRowId) {
 
     alert(
       "실험 기록을 찾을 수 없습니다."
     );
 
     return;
-
   }
 
-
-  // ====================================================
-  // 의사결정 시간
-  // ====================================================
 
   const decisionTime =
     experimentStartTime
@@ -1268,23 +1065,6 @@ async function finishExperiment() {
 
       : 0;
 
-
-  console.log(
-    "최종 선택:",
-    selectedProductId
-  );
-
-
-  console.log(
-    "의사결정 시간:",
-    decisionTime,
-    "초"
-  );
-
-
-  // ====================================================
-  // 최종 DB 데이터
-  // ====================================================
 
   const updateData = {
 
@@ -1301,7 +1081,6 @@ async function finishExperiment() {
       decisionTime,
 
 
-    // 방문 여부
     a_detail_visited:
       detailVisited.A,
 
@@ -1324,7 +1103,6 @@ async function finishExperiment() {
       detailVisited.G,
 
 
-    // 조회 횟수
     a_detail_views:
       detailViews.A,
 
@@ -1347,41 +1125,28 @@ async function finishExperiment() {
       detailViews.G,
 
 
-    // 조회 순서
-    detail_view_sequence:
-      [
-        ...detailViewSequence
-      ]
+    detail_view_sequence: [
+      ...detailViewSequence
+    ]
 
   };
 
 
-  console.log(
-    "최종 DB 업데이트:",
-    updateData
-  );
+  const { error } =
+    await supabase
 
+      .from(
+        "experiment_data"
+      )
 
-  // ====================================================
-  // Supabase 업데이트
-  // ====================================================
+      .update(
+        updateData
+      )
 
-  const {
-    error
-  } = await supabase
-
-    .from(
-      "experiment_data"
-    )
-
-    .update(
-      updateData
-    )
-
-    .eq(
-      "id",
-      experimentRowId
-    );
+      .eq(
+        "id",
+        experimentRowId
+      );
 
 
   if (error) {
@@ -1391,45 +1156,18 @@ async function finishExperiment() {
       error
     );
 
-
     alert(
       "실험 데이터를 저장하지 못했습니다.\n\n" +
       "인터넷 연결을 확인한 후 다시 시도해주세요."
     );
 
-
     return;
-
   }
 
 
-  // ====================================================
-  // 저장 성공
-  // ====================================================
-
   console.log(
-    "NOVA 실험 데이터 저장 완료"
+    "INSITE 실험 데이터 저장 완료"
   );
-
-
-  console.log({
-
-    participant_id:
-      participantId,
-
-    final_choice:
-      selectedProductId,
-
-    detail_views:
-      detailViews,
-
-    detail_view_sequence:
-      detailViewSequence,
-
-    decision_time:
-      decisionTime
-
-  });
 
 
   closeConfirmModal();
@@ -1452,11 +1190,7 @@ async function finishExperiment() {
 // 이벤트
 // ======================================================
 
-
-// 시작
-if (
-  startButton
-) {
+if (startButton) {
 
   startButton.addEventListener(
     "click",
@@ -1466,10 +1200,7 @@ if (
 }
 
 
-// 목록으로 돌아가기
-if (
-  backButton
-) {
+if (backButton) {
 
   backButton.addEventListener(
     "click",
@@ -1477,14 +1208,11 @@ if (
 
       closeConfirmModal();
 
-
       renderProductList();
-
 
       showScreen(
         shopScreen
       );
-
 
       window.scrollTo(
         0,
@@ -1497,10 +1225,7 @@ if (
 }
 
 
-// 모달 취소
-if (
-  cancelButton
-) {
+if (cancelButton) {
 
   cancelButton.addEventListener(
     "click",
@@ -1517,10 +1242,7 @@ if (
 }
 
 
-// 모달 X
-if (
-  closeModalButton
-) {
+if (closeModalButton) {
 
   closeModalButton.addEventListener(
     "click",
@@ -1537,10 +1259,7 @@ if (
 }
 
 
-// 모달 바깥 클릭
-if (
-  confirmModal
-) {
+if (confirmModal) {
 
   confirmModal.addEventListener(
     "click",
@@ -1564,10 +1283,7 @@ if (
 }
 
 
-// 최종 선택 확인
-if (
-  confirmButton
-) {
+if (confirmButton) {
 
   confirmButton.addEventListener(
     "click",
@@ -1585,10 +1301,8 @@ showScreen(
   startScreen
 );
 
-
 closeConfirmModal();
 
-
 console.log(
-  "NOVA 실험 페이지가 정상적으로 실행되었습니다."
+  "INSITE 실험 페이지가 정상적으로 실행되었습니다."
 );
