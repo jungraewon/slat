@@ -1,7 +1,3 @@
-/* =========================================================
-   NOVA - 전체 UI
-========================================================= */
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,6 +7,7 @@
 html {
   width: 100%;
   min-height: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -22,11 +19,12 @@ body {
     BlinkMacSystemFont,
     "Segoe UI",
     "Noto Sans KR",
+    "Apple SD Gothic Neo",
     Arial,
     sans-serif;
 
   color: #111827;
-  background: #f3f4f6;
+  background: #f7f7f8;
 
   -webkit-font-smoothing: antialiased;
 }
@@ -41,59 +39,62 @@ button {
 
 
 /* =========================================================
-   공통 버튼
+   COMMON BUTTON
 ========================================================= */
 
 .button {
-  border: none;
-  border-radius: 13px;
+  min-height: 50px;
 
-  min-height: 52px;
-  padding: 0 22px;
+  padding: 0 18px;
 
-  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  border: 0;
+  border-radius: 6px;
+
+  font-size: 14px;
   font-weight: 700;
 
   cursor: pointer;
 
   transition:
-    transform 0.15s ease,
     background 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.button:hover {
-  transform: translateY(-1px);
-}
-
-.button:active {
-  transform: translateY(0);
+    transform 0.15s ease;
 }
 
 .button-primary {
-  background: #111827;
+  background: #e53935;
   color: #ffffff;
-
-  box-shadow:
-    0 6px 16px rgba(17, 24, 39, 0.14);
 }
 
 .button-primary:hover {
-  background: #1f2937;
+  background: #d92f2b;
+}
+
+.button-primary:active {
+  transform: scale(0.99);
 }
 
 .button-secondary {
-  background: #e5e7eb;
-  color: #111827;
+  background: #f1f2f4;
+  color: #33363d;
 }
 
 .button-secondary:hover {
-  background: #dfe2e6;
+  background: #e6e7e9;
+}
+
+.button-arrow {
+  font-size: 19px;
+  line-height: 1;
 }
 
 
 /* =========================================================
-   시작 화면
+   START
 ========================================================= */
 
 #startScreen {
@@ -103,89 +104,160 @@ button {
   align-items: center;
   justify-content: center;
 
-  padding: 30px 20px;
+  padding: 24px 16px;
 
-  background:
-    radial-gradient(
-      circle at top,
-      #ffffff 0%,
-      #f5f6f8 55%,
-      #eceef1 100%
-    );
+  background: #f5f6f7;
 }
 
 .start-card {
   width: 100%;
-  max-width: 560px;
+  max-width: 460px;
 
-  padding: 52px 44px 44px;
+  padding: 42px 28px 30px;
 
   background: #ffffff;
 
   border: 1px solid #e5e7eb;
-  border-radius: 28px;
+  border-radius: 12px;
 
   text-align: center;
 
   box-shadow:
-    0 22px 60px rgba(0, 0, 0, 0.09);
+    0 5px 22px rgba(0, 0, 0, 0.06);
+}
+
+.start-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 22px;
+}
+
+.brand-mark {
+  width: 31px;
+  height: 31px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #e53935;
+  color: #ffffff;
+
+  border-radius: 6px;
+
+  font-size: 15px;
+  font-weight: 900;
 }
 
 .logo {
-  margin-bottom: 25px;
+  color: #111827;
 
-  font-size: 38px;
+  font-size: 25px;
   font-weight: 900;
 
-  letter-spacing: 7px;
+  letter-spacing: 2px;
+}
 
-  color: #111827;
+.start-label {
+  margin-bottom: 13px;
+
+  color: #9ca3af;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.7px;
 }
 
 .start-card h1 {
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 
-  font-size: 30px;
+  color: #111827;
+
+  font-size: 29px;
   font-weight: 800;
 
+  line-height: 1.35;
   letter-spacing: -1px;
 }
 
 .start-description {
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 
   color: #6b7280;
 
-  font-size: 15px;
-  line-height: 1.8;
+  font-size: 13px;
+  line-height: 1.75;
 }
 
 .notice-box {
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 
-  padding: 18px 20px;
+  padding: 15px;
 
-  background: #f3f4f6;
+  background: #f8f9fa;
 
-  border-radius: 14px;
+  border: 1px solid #eceef0;
+  border-radius: 7px;
 
   text-align: left;
 }
 
-.notice-box p {
-  color: #4b5563;
+.notice-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
 
-  font-size: 14px;
-  line-height: 1.9;
+  color: #6b7280;
+
+  font-size: 11px;
+  line-height: 1.6;
 }
 
-.start-card .button {
+.notice-item + .notice-item {
+  margin-top: 7px;
+}
+
+.notice-check {
+  width: 17px;
+  height: 17px;
+
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #e53935;
+  color: #ffffff;
+
+  border-radius: 50%;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.start-button {
   width: 100%;
+  min-height: 52px;
+}
+
+.start-footer {
+  margin-top: 20px;
+
+  color: #b6bac1;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
 }
 
 
 /* =========================================================
-   상단 헤더
+   HEADER
 ========================================================= */
 
 .header {
@@ -195,81 +267,104 @@ button {
 
   width: 100%;
 
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.97);
 
   border-bottom: 1px solid #e5e7eb;
-
-  backdrop-filter: blur(12px);
 }
 
 .header-inner {
   width: 100%;
   max-width: 1180px;
 
-  min-height: 68px;
+  min-height: 62px;
 
   margin: 0 auto;
-
-  padding: 0 28px;
+  padding: 0 20px;
 
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+
+  grid-template-columns:
+    1fr auto 1fr;
 
   align-items: center;
 }
 
-.header-logo {
-  justify-self: start;
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
 
-  font-size: 21px;
+.header-logo {
+  color: #111827;
+
+  font-size: 20px;
   font-weight: 900;
 
-  letter-spacing: 3px;
+  letter-spacing: 2px;
+}
+
+.header-divider {
+  width: 1px;
+  height: 15px;
+
+  background: #dfe2e5;
 }
 
 .header-title {
-  font-size: 15px;
-  font-weight: 700;
+  color: #6b7280;
+
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .header-badge {
   justify-self: end;
 
-  padding: 7px 11px;
+  padding: 5px 9px;
 
-  background: #f3f4f6;
+  background: #fff3f3;
 
-  border-radius: 8px;
+  border: 1px solid #ffd8d8;
+  border-radius: 4px;
 
-  color: #6b7280;
+  color: #e53935;
 
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.header-empty {
-  width: 80px;
+  font-size: 8px;
+  font-weight: 800;
 }
 
 .back-button {
-  border: none;
+  border: 0;
   background: transparent;
 
-  color: #4b5563;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 
-  font-size: 14px;
+  color: #555b64;
+
+  font-size: 12px;
   font-weight: 700;
 
   cursor: pointer;
 }
 
 .back-button:hover {
-  color: #111827;
+  color: #e53935;
+}
+
+.back-icon {
+  font-size: 17px;
+}
+
+.header-spacer {
+  width: 70px;
 }
 
 
 /* =========================================================
-   상품 목록
+   SHOP
 ========================================================= */
 
 .shop-container {
@@ -278,47 +373,68 @@ button {
 
   margin: 0 auto;
 
-  padding: 48px 28px 80px;
+  padding: 28px 20px 70px;
 }
 
 .page-heading {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.section-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #9ca3af;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
 }
 
 .page-heading h2 {
-  margin-bottom: 8px;
+  color: #111827;
 
-  font-size: 29px;
+  font-size: 25px;
   font-weight: 800;
 
   letter-spacing: -0.8px;
 }
 
 .page-heading p {
-  color: #6b7280;
+  color: #777d86;
 
-  font-size: 14px;
+  font-size: 11px;
+
+  text-align: right;
+}
+
+.mobile-only {
+  display: none;
 }
 
 
 /* =========================================================
-   상품 그리드
+   PRODUCT GRID
 ========================================================= */
 
 .product-grid {
-  width: 100%;
-
   display: grid;
 
   grid-template-columns:
     repeat(3, minmax(0, 1fr));
 
-  gap: 22px;
+  gap: 14px;
 }
 
 
 /* =========================================================
-   상품 카드
+   PRODUCT CARD
 ========================================================= */
 
 .product-card {
@@ -326,62 +442,83 @@ button {
 
   background: #ffffff;
 
-  border: 1px solid #e5e7eb;
-
-  border-radius: 20px;
+  border: 1px solid #e4e6e9;
+  border-radius: 8px;
 
   box-shadow:
-    0 5px 20px rgba(0, 0, 0, 0.045);
+    0 2px 8px rgba(0, 0, 0, 0.035);
 
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
 
   box-shadow:
-    0 14px 35px rgba(0, 0, 0, 0.09);
+    0 8px 22px rgba(0, 0, 0, 0.07);
 }
 
 
 /* =========================================================
-   스마트폰 이미지 영역
+   PRODUCT IMAGE
 ========================================================= */
 
-.phone-area {
+.product-image-area {
+  position: relative;
+
   width: 100%;
-  height: 260px;
+  height: 250px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background:
-    linear-gradient(
-      145deg,
-      #fafafa,
-      #eef0f3
-    );
+  background: #f7f7f8;
 
-  border-bottom: 1px solid #eceef1;
+  border-bottom: 1px solid #eeeeef;
 }
+
+.product-badge {
+  position: absolute;
+
+  top: 12px;
+  left: 12px;
+  z-index: 5;
+
+  padding: 5px 7px;
+
+  background: #e53935;
+  color: #ffffff;
+
+  border-radius: 3px;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   PHONE
+========================================================= */
 
 .phone {
   position: relative;
+  z-index: 2;
 
-  width: 116px;
+  width: 115px;
   height: 205px;
 
-  padding: 7px;
+  padding: 6px;
 
-  background: #171717;
+  background: #191a1d;
 
-  border-radius: 25px;
+  border: 1px solid #34363a;
+  border-radius: 23px;
 
   box-shadow:
-    0 18px 30px rgba(0, 0, 0, 0.18);
+    0 15px 28px rgba(0, 0, 0, 0.17);
 }
 
 .phone-screen {
@@ -395,15 +532,16 @@ button {
   background:
     linear-gradient(
       145deg,
-      #ffffff,
-      #e5e7eb
+      #ffffff 0%,
+      #f2f3f4 50%,
+      #e3e5e8 100%
     );
 
-  border-radius: 19px;
+  border-radius: 18px;
 
-  color: #20242a;
+  color: #30343a;
 
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 900;
 
   letter-spacing: 2px;
@@ -412,62 +550,203 @@ button {
 .phone-camera {
   position: absolute;
 
-  top: 14px;
+  top: 11px;
   left: 50%;
 
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 
   transform: translateX(-50%);
 
-  background: #444;
+  background: #25262a;
+
+  border: 1px solid #55565b;
 
   border-radius: 50%;
 }
 
 
 /* =========================================================
-   상품 정보
+   PRODUCT INFO
 ========================================================= */
 
 .product-info {
-  padding: 22px;
+  padding: 17px 17px 18px;
 }
 
 .brand-small {
-  margin-bottom: 7px;
+  margin-bottom: 5px;
 
-  color: #8a9099;
+  color: #9ca3af;
 
-  font-size: 11px;
+  font-size: 8px;
   font-weight: 800;
 
-  letter-spacing: 1.8px;
+  letter-spacing: 1.5px;
 }
 
 .product-info h3 {
-  margin-bottom: 10px;
+  margin-bottom: 9px;
 
-  font-size: 21px;
-  font-weight: 800;
+  color: #20242a;
+
+  font-size: 18px;
+  font-weight: 750;
 
   letter-spacing: -0.4px;
 }
 
-.price {
-  margin-bottom: 19px;
 
-  font-size: 20px;
-  font-weight: 800;
+/* =========================================================
+   DISCOUNT
+========================================================= */
+
+.discount-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  margin-bottom: 2px;
 }
 
-.product-info .button {
-  width: 100%;
+.discount-rate {
+  color: #e53935;
+
+  font-size: 17px;
+  font-weight: 850;
+}
+
+.original-price {
+  color: #9ca3af;
+
+  font-size: 11px;
+  text-decoration: line-through;
+}
+
+.price {
+  margin-bottom: 8px;
+
+  color: #111827;
+
+  font-size: 21px;
+  font-weight: 850;
+
+  letter-spacing: -0.7px;
 }
 
 
 /* =========================================================
-   상세 페이지
+   PRODUCT RATING
+========================================================= */
+
+.product-rating {
+  min-height: 22px;
+
+  margin-bottom: 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 3px;
+
+  color: #555b63;
+
+  font-size: 12px;
+}
+
+.rating-star {
+  color: #f5a623;
+
+  font-size: 16px;
+}
+
+.product-rating strong {
+  color: #333840;
+
+  font-size: 12px;
+}
+
+.rating-total {
+  color: #9ca3af;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   STOCK NOTICE
+   사양 + 내구성 정보가 제공되는 상품에만 표시
+========================================================= */
+
+.stock-notice {
+  width: fit-content;
+
+  margin-top: 2px;
+  margin-bottom: 12px;
+
+  padding: 6px 9px;
+
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  background: #fff3f3;
+
+  border: 1px solid #ffd6d6;
+  border-radius: 4px;
+
+  color: #e53935;
+
+  line-height: 1;
+}
+
+.stock-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #e53935;
+
+  font-size: 8px;
+}
+
+.stock-notice strong {
+  color: #e53935;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.detail-stock-notice {
+  margin-top: 9px;
+  margin-bottom: 0;
+
+  padding: 7px 10px;
+
+  border-radius: 5px;
+}
+
+.detail-stock-notice strong {
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   PRODUCT BUTTON
+========================================================= */
+
+.product-info .button {
+  width: 100%;
+
+  min-height: 44px;
+
+  border-radius: 5px;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   DETAIL
 ========================================================= */
 
 .detail-container {
@@ -476,7 +755,7 @@ button {
 
   margin: 0 auto;
 
-  padding: 38px 24px 80px;
+  padding: 24px 18px 70px;
 }
 
 .detail-card {
@@ -484,258 +763,302 @@ button {
 
   background: #ffffff;
 
-  border: 1px solid #e5e7eb;
-
-  border-radius: 24px;
+  border: 1px solid #e3e5e8;
+  border-radius: 8px;
 
   box-shadow:
-    0 10px 35px rgba(0, 0, 0, 0.055);
+    0 3px 14px rgba(0, 0, 0, 0.045);
 }
 
 
 /* =========================================================
-   상세 상품 기본 정보
+   DETAIL PRODUCT
 ========================================================= */
 
 .detail-product {
   display: flex;
   align-items: center;
 
-  gap: 48px;
+  gap: 35px;
 
-  padding: 42px;
+  padding: 30px;
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #eceef0;
 }
 
 .detail-phone-area {
-  flex: 0 0 235px;
+  position: relative;
 
-  width: 235px;
-  height: 300px;
+  flex: 0 0 225px;
+
+  width: 225px;
+  height: 285px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background:
-    linear-gradient(
-      145deg,
-      #fafafa,
-      #eef0f3
-    );
+  background: #f7f7f8;
 
-  border-radius: 18px;
+  border-radius: 7px;
+}
+
+.detail-discount-badge {
+  position: absolute;
+
+  top: 13px;
+  left: 13px;
+  z-index: 5;
+
+  padding: 6px 8px;
+
+  background: #e53935;
+  color: #ffffff;
+
+  border-radius: 3px;
+
+  font-size: 10px;
+  font-weight: 800;
 }
 
 .phone.large {
-  width: 132px;
+  width: 135px;
   height: 238px;
 
-  border-radius: 28px;
+  border-radius: 27px;
 }
 
 .detail-basic {
   flex: 1;
 }
 
-.detail-basic h1 {
-  margin-bottom: 13px;
+.detail-basic .brand-small {
+  margin-bottom: 7px;
+}
 
-  font-size: 36px;
-  font-weight: 850;
+.detail-basic h1 {
+  margin-bottom: 12px;
+
+  color: #111827;
+
+  font-size: 32px;
+  font-weight: 800;
 
   letter-spacing: -1px;
 }
 
+.detail-discount {
+  margin-bottom: 0;
+}
+
 .large-price {
+  margin-bottom: 11px;
+
+  color: #111827;
+
   font-size: 28px;
+}
+
+.detail-rating {
+  margin-bottom: 0;
 }
 
 
 /* =========================================================
-   상세 정보
+   INFORMATION
 ========================================================= */
 
 .information-area {
-  padding: 0 42px;
+  padding: 0 30px;
 }
 
 .information-section {
-  padding: 30px 0;
+  padding: 25px 0;
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #eceef0;
 }
 
 .information-section:last-child {
-  border-bottom: none;
+  border-bottom: 0;
 }
 
 .information-section h2 {
-  margin-bottom: 18px;
+  margin-bottom: 13px;
 
-  font-size: 19px;
+  color: #20242a;
+
+  font-size: 16px;
   font-weight: 800;
 }
 
 
 /* =========================================================
-   리뷰
+   REVIEW
 ========================================================= */
 
 .review-list {
   display: flex;
   flex-direction: column;
 
-  gap: 10px;
+  gap: 8px;
 }
 
 .review {
-  padding: 17px 18px;
+  padding: 15px;
 
-  background: #f8f9fb;
+  background: #fafafa;
 
-  border: 1px solid #eef0f2;
-
-  border-radius: 13px;
+  border: 1px solid #eceef0;
+  border-radius: 6px;
 }
 
 .review-stars {
-  margin-bottom: 7px;
+  margin-bottom: 6px;
 
-  font-size: 13px;
+  color: #f5a623;
+
+  font-size: 12px;
 
   letter-spacing: 1px;
 }
 
 .review p {
-  color: #5f6670;
+  color: #626871;
 
-  font-size: 14px;
-  line-height: 1.65;
+  font-size: 12px;
+  line-height: 1.7;
 }
 
 
 /* =========================================================
-   별점
+   DETAIL RATING
 ========================================================= */
 
 .rating {
-  min-height: 95px;
+  min-height: 85px;
 
-  padding: 20px 22px;
+  padding: 18px;
 
   display: flex;
   align-items: center;
+  gap: 18px;
 
-  background: #f8f9fb;
+  background: #fafafa;
 
-  border: 1px solid #eef0f2;
+  border: 1px solid #eceef0;
+  border-radius: 6px;
+}
 
-  border-radius: 14px;
+.rating-score {
+  display: flex;
+  align-items: baseline;
 }
 
 .rating-number {
-  font-size: 40px;
+  color: #111827;
+
+  font-size: 35px;
   font-weight: 900;
 }
 
 .rating-max {
-  margin-left: 4px;
+  margin-left: 3px;
 
   color: #9ca3af;
 
-  font-size: 14px;
+  font-size: 11px;
 }
 
 .rating-stars {
-  margin-left: 18px;
+  color: #f5a623;
 
-  font-size: 19px;
+  font-size: 17px;
 
   letter-spacing: 1px;
 }
 
 
 /* =========================================================
-   제품 사양
+   SPEC
 ========================================================= */
 
 .spec-list {
   overflow: hidden;
 
-  border: 1px solid #e5e7eb;
-
-  border-radius: 13px;
+  border: 1px solid #e4e6e9;
+  border-radius: 6px;
 }
 
 .spec-row {
-  min-height: 55px;
+  min-height: 52px;
 
-  padding: 0 18px;
+  padding: 0 16px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #eceef0;
 }
 
 .spec-row:last-child {
-  border-bottom: none;
+  border-bottom: 0;
 }
 
 .spec-row span {
-  color: #6b7280;
+  color: #747a82;
 
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .spec-row strong {
-  font-size: 14px;
+  color: #252a31;
+
+  font-size: 12px;
 }
 
 
 /* =========================================================
-   내구성
+   DURABILITY
 ========================================================= */
 
 .durability {
-  margin-top: 18px;
+  margin-top: 12px;
 
-  padding: 19px;
+  padding: 16px;
 
-  background: #f8f9fb;
+  background: #fafafa;
 
-  border: 1px solid #eef0f2;
-
-  border-radius: 13px;
+  border: 1px solid #eceef0;
+  border-radius: 6px;
 }
 
 .durability-header {
   display: flex;
   justify-content: space-between;
 
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .durability-header span {
-  color: #6b7280;
+  color: #747a82;
 
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .durability-header strong {
-  font-size: 14px;
+  color: #252a31;
+
+  font-size: 12px;
 }
 
 .durability-bar {
   width: 100%;
-  height: 8px;
+  height: 7px;
 
   overflow: hidden;
 
-  background: #e1e4e8;
+  background: #e4e6e9;
 
   border-radius: 999px;
 }
@@ -743,107 +1066,134 @@ button {
 .durability-fill {
   height: 100%;
 
-  background: #111827;
+  background: #e53935;
 
   border-radius: inherit;
 }
 
 
 /* =========================================================
-   상세 선택 버튼
+   DETAIL BUTTON
 ========================================================= */
 
 .detail-action {
-  padding: 28px 42px 42px;
+  padding: 20px 30px 30px;
 }
 
 .select-button {
   width: 100%;
 
-  min-height: 56px;
+  min-height: 53px;
 
-  font-size: 16px;
+  border-radius: 5px;
+
+  font-size: 14px;
 }
 
 
 /* =========================================================
-   선택 모달
+   MODAL
 ========================================================= */
 
 .modal {
   position: fixed;
-
   inset: 0;
-
-  z-index: 999;
+  z-index: 9999;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  padding: 20px;
+  padding: 18px;
 
-  background: rgba(17, 24, 39, 0.48);
+  background: rgba(0, 0, 0, 0.45);
 
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(4px);
 }
 
 .modal-card {
   position: relative;
 
   width: 100%;
-  max-width: 420px;
+  max-width: 390px;
 
-  padding: 36px 30px 30px;
+  padding: 32px 24px 24px;
 
   background: #ffffff;
 
-  border-radius: 22px;
+  border-radius: 8px;
 
   text-align: center;
 
   box-shadow:
-    0 25px 70px rgba(0, 0, 0, 0.22);
+    0 20px 55px rgba(0, 0, 0, 0.2);
 }
 
 .modal-close {
   position: absolute;
 
-  top: 12px;
-  right: 15px;
+  top: 10px;
+  right: 11px;
 
-  width: 35px;
-  height: 35px;
+  width: 34px;
+  height: 34px;
 
-  border: none;
-
+  border: 0;
   background: transparent;
 
-  color: #6b7280;
+  color: #777d84;
 
-  font-size: 26px;
+  font-size: 23px;
 
   cursor: pointer;
 }
 
 .modal-icon {
-  margin-bottom: 15px;
+  width: 48px;
+  height: 48px;
 
-  font-size: 38px;
+  margin: 0 auto 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff1f1;
+
+  border-radius: 50%;
+
+  color: #e53935;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.modal-label {
+  margin-bottom: 7px;
+
+  color: #9ca3af;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
 }
 
 .modal-card h3 {
-  margin-bottom: 9px;
+  margin-bottom: 8px;
 
-  font-size: 20px;
+  color: #20242a;
+
+  font-size: 18px;
+  font-weight: 800;
 }
 
-.modal-card > p {
-  margin-bottom: 24px;
+.modal-description {
+  margin-bottom: 20px;
 
-  color: #6b7280;
+  color: #777d84;
 
-  font-size: 13px;
+  font-size: 11px;
 }
 
 .modal-buttons {
@@ -851,16 +1201,20 @@ button {
 
   grid-template-columns: 1fr 1fr;
 
-  gap: 10px;
+  gap: 8px;
 }
 
 .modal-buttons .button {
   width: 100%;
+
+  min-height: 47px;
+
+  font-size: 12px;
 }
 
 
 /* =========================================================
-   완료 화면
+   COMPLETE
 ========================================================= */
 
 #completeScreen {
@@ -870,79 +1224,132 @@ button {
   align-items: center;
   justify-content: center;
 
-  padding: 25px;
+  padding: 20px;
 
-  background:
-    radial-gradient(
-      circle at top,
-      #ffffff,
-      #f3f4f6
-    );
+  background: #f5f6f7;
 }
 
 .complete-card {
   width: 100%;
-  max-width: 500px;
+  max-width: 450px;
 
-  padding: 50px 35px;
+  padding: 40px 28px 28px;
 
   background: #ffffff;
 
-  border: 1px solid #e5e7eb;
-
-  border-radius: 24px;
+  border: 1px solid #e4e6e9;
+  border-radius: 9px;
 
   text-align: center;
 
   box-shadow:
-    0 20px 55px rgba(0, 0, 0, 0.07);
+    0 5px 22px rgba(0, 0, 0, 0.055);
+}
+
+.complete-brand {
+  margin-bottom: 22px;
+
+  color: #111827;
+
+  font-size: 17px;
+  font-weight: 900;
+
+  letter-spacing: 2px;
 }
 
 .complete-icon {
-  width: 72px;
-  height: 72px;
+  width: 62px;
+  height: 62px;
 
-  margin: 0 auto 22px;
+  margin: 0 auto 19px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: #111827;
+  background: #e53935;
 
   border-radius: 50%;
 
   color: #ffffff;
 
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 800;
 }
 
-.complete-card h1 {
-  margin-bottom: 11px;
+.complete-label {
+  display: block;
 
-  font-size: 25px;
+  margin-bottom: 9px;
+
+  color: #9ca3af;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+.complete-card h1 {
+  margin-bottom: 9px;
+
+  color: #20242a;
+
+  font-size: 24px;
   font-weight: 800;
 }
 
 .complete-card > p {
-  margin-bottom: 25px;
+  margin-bottom: 22px;
 
-  color: #6b7280;
+  color: #777d84;
 
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .complete-box {
-  padding: 16px;
+  padding: 14px;
 
-  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
 
-  border-radius: 12px;
+  background: #fafafa;
+
+  border: 1px solid #eceef0;
+  border-radius: 6px;
 
   color: #6b7280;
 
-  font-size: 13px;
+  font-size: 11px;
+}
+
+.complete-box-icon {
+  width: 17px;
+  height: 17px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #e53935;
+  color: #ffffff;
+
+  border-radius: 50%;
+
+  font-size: 8px;
+}
+
+.complete-footer {
+  margin-top: 19px;
+
+  color: #b5b9bf;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
 }
 
 
@@ -958,26 +1365,24 @@ button {
   }
 
   .detail-product {
-    gap: 30px;
-
-    padding: 32px;
+    gap: 25px;
+    padding: 25px;
   }
 
   .detail-phone-area {
-    flex-basis: 210px;
-
-    width: 210px;
+    flex-basis: 205px;
+    width: 205px;
+    height: 270px;
   }
 
   .information-area {
-    padding: 0 32px;
+    padding: 0 25px;
   }
 
   .detail-action {
     padding:
-      25px 32px 32px;
+      18px 25px 25px;
   }
-
 }
 
 
@@ -988,9 +1393,17 @@ button {
 @media (max-width: 620px) {
 
   .header-inner {
-    min-height: 60px;
+    min-height: 58px;
 
-    padding: 0 16px;
+    padding: 0 14px;
+  }
+
+  .header-logo {
+    font-size: 18px;
+  }
+
+  .header-title {
+    font-size: 11px;
   }
 
   .header-badge {
@@ -999,113 +1412,288 @@ button {
 
   .shop-container {
     padding:
-      32px 16px 60px;
+      22px 12px 55px;
+  }
+
+  .page-heading {
+    display: block;
+
+    margin-bottom: 17px;
   }
 
   .page-heading h2 {
-    font-size: 25px;
+    font-size: 23px;
+  }
+
+  .page-heading p {
+    margin-top: 6px;
+
+    text-align: left;
+
+    font-size: 11px;
+  }
+
+  .mobile-only {
+    display: inline;
   }
 
   .product-grid {
     grid-template-columns: 1fr;
 
-    gap: 16px;
+    gap: 10px;
   }
 
-  .phone-area {
-    height: 225px;
+  .product-card {
+    display: grid;
+
+    grid-template-columns: 42% 58%;
+
+    border-radius: 6px;
   }
+
+  .product-image-area {
+    height: 235px;
+
+    border-bottom: 0;
+    border-right: 1px solid #eeeeef;
+  }
+
+  .product-badge {
+    top: 9px;
+    left: 9px;
+
+    font-size: 9px;
+  }
+
+  .phone {
+    width: 96px;
+    height: 172px;
+
+    border-radius: 20px;
+  }
+
+  .phone-screen {
+    border-radius: 15px;
+
+    font-size: 9px;
+  }
+
+  .phone-camera {
+    top: 9px;
+
+    width: 6px;
+    height: 6px;
+  }
+
+  .product-info {
+    padding: 17px 14px;
+  }
+
+  .product-info h3 {
+    font-size: 17px;
+  }
+
+  .discount-rate {
+    font-size: 16px;
+  }
+
+  .price {
+    font-size: 20px;
+  }
+
+  .product-rating {
+    margin-bottom: 10px;
+  }
+
+  .stock-notice {
+    margin-top: 1px;
+    margin-bottom: 10px;
+
+    padding: 6px 8px;
+  }
+
+  .stock-notice strong {
+    font-size: 10px;
+  }
+
+  .product-info .button {
+    min-height: 42px;
+
+    font-size: 11px;
+  }
+
+
+  /* DETAIL */
 
   .detail-container {
     padding:
-      18px 12px 50px;
+      12px 8px 50px;
+  }
+
+  .detail-card {
+    border-radius: 7px;
   }
 
   .detail-product {
     flex-direction: column;
-
     align-items: stretch;
 
-    gap: 22px;
+    gap: 20px;
 
-    padding: 22px;
+    padding: 18px;
   }
 
   .detail-phone-area {
     width: 100%;
-    height: 270px;
+    height: 250px;
 
     flex: none;
   }
 
+  .detail-discount-badge {
+    top: 10px;
+    left: 10px;
+  }
+
+  .phone.large {
+    width: 120px;
+    height: 215px;
+  }
+
   .detail-basic h1 {
-    font-size: 29px;
+    font-size: 27px;
   }
 
   .large-price {
-    font-size: 23px;
+    font-size: 25px;
+  }
+
+  .detail-stock-notice {
+    margin-top: 8px;
+    margin-bottom: 0;
+
+    padding: 7px 9px;
+  }
+
+  .detail-stock-notice strong {
+    font-size: 11px;
   }
 
   .information-area {
-    padding:
-      0 22px;
+    padding: 0 18px;
   }
 
   .information-section {
     padding:
-      25px 0;
+      22px 0;
+  }
+
+  .information-section h2 {
+    font-size: 15px;
+  }
+
+  .rating {
+    gap: 13px;
   }
 
   .rating-number {
-    font-size: 35px;
+    font-size: 32px;
   }
 
   .rating-stars {
-    margin-left: 12px;
-
-    font-size: 16px;
+    font-size: 15px;
   }
 
   .detail-action {
     padding:
-      22px;
+      17px 18px 21px;
+  }
+
+
+  /* START */
+
+  #startScreen {
+    padding: 14px;
   }
 
   .start-card {
     padding:
-      40px 22px 30px;
+      36px 20px 25px;
   }
 
   .start-card h1 {
-    font-size: 25px;
+    font-size: 26px;
   }
 
+
+  /* MODAL */
+
+  .modal-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-buttons .button {
+    min-height: 46px;
+  }
 }
 
 
 /* =========================================================
-   작은 모바일
+   SMALL MOBILE
 ========================================================= */
 
 @media (max-width: 380px) {
 
-  .start-card {
-    padding:
-      35px 18px 25px;
+  .product-card {
+    grid-template-columns: 40% 60%;
+  }
+
+  .product-image-area {
+    height: 220px;
+  }
+
+  .phone {
+    width: 87px;
+    height: 156px;
   }
 
   .product-info {
-    padding:
-      18px;
+    padding: 15px 12px;
   }
 
-  .detail-phone-area {
-    height: 240px;
+  .product-info h3 {
+    font-size: 16px;
   }
 
-  .phone.large {
-    width: 118px;
-    height: 215px;
+  .discount-rate {
+    font-size: 15px;
   }
 
+  .original-price {
+    font-size: 10px;
+  }
+
+  .price {
+    font-size: 18px;
+  }
+
+  .product-rating {
+    margin-bottom: 8px;
+  }
+
+  .stock-notice {
+    padding: 5px 7px;
+  }
+
+  .stock-notice strong {
+    font-size: 9px;
+  }
+
+  .product-info .button {
+    min-height: 40px;
+
+    padding: 0 8px;
+
+    font-size: 10px;
+  }
 }
