@@ -2,48 +2,79 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+  >
 
-  <title>NOVA 스마트폰 구매 실험</title>
+  <title>INSITE | 스마트폰 구매 실험</title>
 
   <link rel="stylesheet" href="./src/style.css">
 </head>
 
 <body>
 
+  <!-- =====================================================
+       시작 화면
+  ====================================================== -->
   <section id="startScreen" class="screen">
 
     <div class="start-card">
 
-      <div class="logo">NOVA</div>
+      <div class="start-brand">
+        <span class="brand-mark">I</span>
+        <span class="logo">INSITE</span>
+      </div>
 
-      <h1>스마트폰 구매 실험</h1>
+      <div class="start-label">
+        ONLINE SHOPPING EXPERIMENT
+      </div>
+
+      <h1>
+        스마트폰을<br>
+        비교해보세요.
+      </h1>
 
       <p class="start-description">
-        여러 스마트폰을 비교한 후<br>
+        여러 스마트폰을 자유롭게 살펴본 후<br>
         가장 구매하고 싶은 상품을 선택해주세요.
       </p>
 
       <div class="notice-box">
 
-        <p>✓ 모든 상품은 가상의 상품입니다.</p>
+        <div class="notice-item">
+          <span class="notice-check">✓</span>
+          <span>모든 상품은 가상의 상품입니다.</span>
+        </div>
 
-        <p>✓ 원하는 만큼 상품을 비교할 수 있습니다.</p>
+        <div class="notice-item">
+          <span class="notice-check">✓</span>
+          <span>원하는 만큼 상품을 비교할 수 있습니다.</span>
+        </div>
 
       </div>
 
       <button
         id="startButton"
-        class="button button-primary"
+        class="button button-primary start-button"
+        type="button"
       >
         쇼핑 시작하기
+        <span class="button-arrow">→</span>
       </button>
+
+      <p class="start-footer">
+        INSITE SMARTPHONE LAB
+      </p>
 
     </div>
 
   </section>
 
 
+  <!-- =====================================================
+       상품 목록 화면
+  ====================================================== -->
   <section
     id="shopScreen"
     class="screen hidden"
@@ -53,12 +84,16 @@
 
       <div class="header-inner">
 
-        <div class="header-logo">
-          NOVA
-        </div>
+        <div class="header-brand">
+          <div class="header-logo">
+            INSITE
+          </div>
 
-        <div class="header-title">
-          스마트폰
+          <div class="header-divider"></div>
+
+          <div class="header-title">
+            스마트폰
+          </div>
         </div>
 
         <div class="header-badge">
@@ -74,14 +109,29 @@
 
       <div class="page-heading">
 
-        <h2>스마트폰</h2>
+        <div>
+          <span class="section-label">
+            INSITE STORE
+          </span>
+
+          <h2>
+            스마트폰
+          </h2>
+        </div>
 
         <p>
-          원하는 상품을 자유롭게 비교해보세요.
+          원하는 상품을 자유롭게<br class="mobile-only">
+          비교해보세요.
         </p>
 
       </div>
 
+
+      <!--
+        상품 카드가 JavaScript로 이곳에 생성됩니다.
+        main.js의 productGrid와 연결되어 있으므로
+        id를 변경하지 않습니다.
+      -->
       <div
         id="productGrid"
         class="product-grid"
@@ -92,33 +142,42 @@
   </section>
 
 
+  <!-- =====================================================
+       상품 상세 화면
+  ====================================================== -->
   <section
     id="detailScreen"
     class="screen hidden"
   >
 
-    <header class="header">
+    <header class="header detail-header">
 
       <div class="header-inner">
 
         <button
           id="backButton"
           class="back-button"
+          type="button"
         >
-          ← 상품 목록
+          <span class="back-icon">←</span>
+          <span>상품 목록</span>
         </button>
 
         <div class="header-logo">
-          NOVA
+          INSITE
         </div>
 
-        <div></div>
+        <div class="header-spacer"></div>
 
       </div>
 
     </header>
 
 
+    <!--
+      상품 상세 내용은 main.js에서
+      선택된 상품에 따라 동적으로 생성됩니다.
+    -->
     <main
       id="detailContainer"
       class="detail-container"
@@ -127,29 +186,44 @@
   </section>
 
 
+  <!-- =====================================================
+       상품 선택 확인 모달
+  ====================================================== -->
   <div
     id="confirmModal"
     class="modal hidden"
+    aria-hidden="true"
   >
 
-    <div class="modal-card">
+    <div
+      class="modal-card"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="confirmTitle"
+    >
 
       <button
         id="closeModal"
         class="modal-close"
+        type="button"
+        aria-label="닫기"
       >
         ×
       </button>
 
       <div class="modal-icon">
-        🛒
+        <span>✓</span>
+      </div>
+
+      <div class="modal-label">
+        FINAL SELECTION
       </div>
 
       <h3 id="confirmTitle">
         이 상품을 선택하시겠습니까?
       </h3>
 
-      <p>
+      <p class="modal-description">
         최종 선택 후에는 실험이 종료됩니다.
       </p>
 
@@ -158,15 +232,18 @@
         <button
           id="cancelButton"
           class="button button-secondary"
+          type="button"
         >
-          취소
+          다시 비교하기
         </button>
 
         <button
           id="confirmButton"
           class="button button-primary"
+          type="button"
         >
           선택하기
+          <span class="button-arrow">→</span>
         </button>
 
       </div>
@@ -176,6 +253,9 @@
   </div>
 
 
+  <!-- =====================================================
+       완료 화면
+  ====================================================== -->
   <section
     id="completeScreen"
     class="screen hidden"
@@ -183,12 +263,21 @@
 
     <div class="complete-card">
 
-      <div class="complete-icon">
-        ✓
+      <div class="complete-brand">
+        INSITE
       </div>
 
+      <div class="complete-icon">
+        <span>✓</span>
+      </div>
+
+      <span class="complete-label">
+        SELECTION COMPLETE
+      </span>
+
       <h1>
-        선택이 완료되었습니다.
+        선택이<br>
+        완료되었습니다.
       </h1>
 
       <p>
@@ -196,7 +285,14 @@
       </p>
 
       <div class="complete-box">
-        최종 선택이 정상적으로 기록되었습니다.
+        <span class="complete-box-icon">✓</span>
+        <span>
+          최종 선택이 정상적으로 기록되었습니다.
+        </span>
+      </div>
+
+      <div class="complete-footer">
+        INSITE SMARTPHONE LAB
       </div>
 
     </div>
@@ -204,6 +300,9 @@
   </section>
 
 
+  <!-- =====================================================
+       JavaScript
+  ====================================================== -->
   <script
     type="module"
     src="./src/main.js"
