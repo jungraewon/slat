@@ -511,7 +511,6 @@ function graph5Data() {
     };
   });
 }
-
 // ======================================================
 // 막대그래프
 // ======================================================
@@ -855,22 +854,22 @@ function renderScatterChart({
   });
 
   svg += `
-      <text
-        x="${width / 2}"
-        y="${height - 8}"
-        text-anchor="middle"
-        class="axis-title"
-      >
-        ${xLabel}
-      </text>
+    <text
+      x="${width / 2}"
+      y="${height - 8}"
+      text-anchor="middle"
+      class="axis-title"
+    >
+      ${xLabel}
+    </text>
 
-      <text
-        transform="translate(16 ${height / 2}) rotate(-90)"
-        text-anchor="middle"
-        class="axis-title"
-      >
-        ${yLabel}
-      </text>
+    <text
+      transform="translate(16 ${height / 2}) rotate(-90)"
+      text-anchor="middle"
+      class="axis-title"
+    >
+      ${yLabel}
+    </text>
     </svg>
   `;
 
@@ -1113,13 +1112,265 @@ function regressionText(points) {
     ${r.r2.toFixed(3)}
   `;
 }
+// ======================================================
+// ⑥ 자동 종합 분석
+// 기존 실험 데이터를 바탕으로 기술통계와 해석 문장 생성
+// ======================================================
+
+function buildAutomaticAnalysis() {
+  const completed = completedRows();
+  const validTimes = validTimeRows();
+  const total = completed.length;
+
+  if (!total) {
+    return {
+      total: 0,
+      productRows: [],
+      infoRows: [],
+      timeRows: [],
+      behavior: null,
+      summary: [
+        "아직 최종 선택을 완료한 참가자 데이터가 없습니다.",
+        "참가자가 실험을 완료하면 상품 선택 결과와 행동 경향을 자동으로 분석합니다."
+      ]
+    };
+  }
+
+  // 상품별 최종 선택 인원과 비율
+  const productRows = products.map(product => {
+    const count = completed.filter(
+      row => row.final_choice === product.id
+    ).length;
+
+    return {
+      ...product,
+      count,
+      rate: count / total * 100
+    };
+  });
+
+  const highestProducts = productRows.filter(
+    item => item.count === Math.max(...productRows.map(p => p.count))
+  );
+
+  // 정보 유형별 최종 선택 결과: 여러 정보가 포함된 상품은 각 유형에 중복 집계
+  const infoTypes = [INFO.review, INFO.rating, INFO.quality];
+  const infoRows = infoTypes.map(type => {
+    const selected = completed.filter(row =>
+      hasInfo(getProduct(row.final_choice), type)
+    ).length;
+
+    const viewedRows = completed.filter(row =>
+      getSequence(row).some(id =>
+        hasInfo(getProduct(id), type)
+      )
+    );
+
+    const converted = viewedRows.filter(row =>
+      hasInfo(getProduct(row.final_choice), type)
+    ).length;
+
+    return {
+      type,
+      selected,
+      selectedRate: selected / total * 100,
+      viewed: viewedRows.length,
+      converted,
+      conversionRate: viewedRows.length
+        ? converted / viewedRows.length * 100
+        : null
+    };
+  });
+
+  // 최종 선택 상품의 정보 개수에 따른 평균 선택 시간
+  const timeRows = [1, 2, 3].map(count => {
+    const rows = validTimes.filter(row =>
+      infoCount(getProduct(row.final_choice)) === count
+    );
+    const avg = average(rows.map(row => row.decision_time));
+
+    return { count, participants: rows.length, average: avg };
+  });
+
+  const averageTime = average(
+    validTimes.map(row => row.decision_time)
+  );
+
+  // 상세페이지를 한 번 이상 확인한 완료 참가자 비율
+  const detailVisited = completed.filter(row =>
+    getSequence(row).length > 0
+  ).length;
+
+  const totalViews = completed.reduce((sum, row) => {
+    return sum + products.reduce(
+      (productSum, product) => productSum + getViews(row, product.id),
+      0
+    );
+  }, 0);
+
+  const summary = [];
+  const winnerText = highestProducts
+    .map(item => item.name)
+    .join(", ");
+
+  summary.push(
+    `최종 선택을 완료한 ${number(total)}명 중 ${winnerText} 상품이 가장 많이 선택되었습니다(${number(highestProducts[0].count)}명, ${percent(highestProducts[0].rate)}).`
+  );
+
+  const infoRanked = [...infoRows].sort(
+    (a, b) => b.selectedRate - a.selectedRate
+  );
+
+  if (infoRanked[0].selected > 0) {
+    summary.push(
+      `${infoRanked[0].type}가 포함된 상품의 선택 비율이 ${percent(infoRanked[0].selectedRate)}로 세 정보 유형 중 가장 높았습니다. 이는 해당 정보가 포함된 상품의 선택 경향을 나타내며, 정보 자체의 독립적인 효과를 뜻하지는 않습니다.`
+    );
+  }
+
+  if (validTimes.length) {
+    summary.push(
+      `선택시간 분석에 포함된 ${number(validTimes.length)}명의 평균 선택시간은 ${seconds(averageTime)}입니다. 300초를 초과한 기록은 시간 분석에서 제외했습니다.`
+    );
+  } else {
+    summary.push("유효한 선택시간 데이터가 아직 충분하지 않아 평균 선택시간을 계산할 수 없습니다.");
+  }
+
+  const populatedTimeRows = timeRows.filter(row => row.participants > 0);
+  if (populatedTimeRows.length >= 2) {
+    const fastest = [...populatedTimeRows].sort(
+      (a, b) => a.average - b.average
+    )[0];
+    const slowest = [...populatedTimeRows].sort(
+      (a, b) => b.average - a.average
+    )[0];
+
+    if (fastest.count !== slowest.count) {
+      summary.push(
+        `최종 선택 상품의 정보가 ${fastest.count}개인 집단의 평균 선택시간이 ${seconds(fastest.average)}로 가장 짧았고, 정보가 ${slowest.count}개인 집단은 ${seconds(slowest.average)}로 나타났습니다. 집단별 참가자 수 차이를 함께 고려해야 합니다.`
+      );
+    }
+  }
+
+  summary.push(
+    `완료 참가자 ${number(total)}명 중 ${number(detailVisited)}명(${percent(detailVisited / total * 100)})이 상세페이지를 한 번 이상 확인했으며, 확인 기록의 총 조회 횟수는 ${number(totalViews)}회입니다.`
+  );
+
+  return {
+    total,
+    productRows,
+    infoRows,
+    timeRows,
+    averageTime,
+    validTimeCount: validTimes.length,
+    behavior: {
+      detailVisited,
+      detailVisitRate: detailVisited / total * 100,
+      totalViews
+    },
+    summary
+  };
+}
+
+function renderAutomaticAnalysis() {
+  const analysis = buildAutomaticAnalysis();
+
+  if (!analysis.total) {
+    return `
+      <section class="dashboard-section automatic-analysis-section">
+        <div class="section-header">
+          <h2>⑥ 실험 결과 자동 분석</h2>
+          <p>기존 실험 데이터를 종합해 주요 결과와 행동 경향을 문장으로 정리합니다.</p>
+        </div>
+        <div class="card automatic-analysis-card">
+          <div class="automatic-empty">아직 분석할 완료 데이터가 없습니다.</div>
+        </div>
+      </section>
+    `;
+  }
+
+  const productItems = analysis.productRows.map(item => `
+    <div class="auto-product-row">
+      <span class="auto-product-name">${item.name}</span>
+      <div class="auto-product-track"><span style="width:${item.rate.toFixed(2)}%"></span></div>
+      <strong>${number(item.count)}명</strong>
+      <span>${percent(item.rate)}</span>
+    </div>
+  `).join("");
+
+  const infoItems = analysis.infoRows.map(item => `
+    <div class="auto-info-item">
+      <div class="auto-info-heading">${item.type}</div>
+      <div class="auto-info-number">${number(item.selected)}명 <span>${percent(item.selectedRate)}</span></div>
+      <p>해당 정보 포함 상품을 선택한 인원</p>
+      <div class="auto-info-detail">
+        상세페이지 확인 ${number(item.viewed)}명 · 확인 후 해당 정보 포함 상품 선택 ${number(item.converted)}명
+        ${item.conversionRate === null ? "" : `(${percent(item.conversionRate)})`}
+      </div>
+    </div>
+  `).join("");
+
+  const timeItems = analysis.timeRows.map(item => `
+    <div class="auto-time-item">
+      <span>정보 ${item.count}개</span>
+      <strong>${item.participants ? seconds(item.average) : "데이터 없음"}</strong>
+      <small>${number(item.participants)}명</small>
+    </div>
+  `).join("");
+
+  const summaryItems = analysis.summary.map(text => `
+    <li>${text}</li>
+  `).join("");
+
+  return `
+    <section class="dashboard-section automatic-analysis-section">
+      <div class="section-header">
+        <h2>⑥ 실험 결과 자동 분석</h2>
+        <p>기존 그래프와 동일한 Supabase 데이터를 종합해 선택 결과와 행동 경향을 자동으로 해석합니다.</p>
+      </div>
+
+      <div class="automatic-analysis-card card">
+        <div class="automatic-analysis-intro">
+          <span class="automatic-tag">DATA-BASED SUMMARY</span>
+          <h3>실험 결과 종합 리포트</h3>
+          <p>완료 참가자 ${number(analysis.total)}명의 데이터를 기준으로 계산했습니다.</p>
+        </div>
+
+        <div class="automatic-block">
+          <h3>1. 상품별 최종 선택 결과</h3>
+          <div class="auto-product-list">${productItems}</div>
+        </div>
+
+        <div class="automatic-block">
+          <h3>2. 정보 유형별 선택 경향</h3>
+          <div class="auto-info-grid">${infoItems}</div>
+          <p class="auto-footnote">※ 한 상품에 여러 정보 유형이 포함될 수 있어 인원과 비율은 중복 집계되며, 합계가 전체 참가자 수 또는 100%와 일치하지 않을 수 있습니다.</p>
+        </div>
+
+        <div class="automatic-block">
+          <h3>3. 정보량과 선택시간</h3>
+          <div class="auto-time-grid">${timeItems}</div>
+          <p class="auto-footnote">※ 선택시간은 0초 이상 300초 이하인 완료 기록만 포함합니다.</p>
+        </div>
+
+        <div class="automatic-block">
+          <h3>4. 종합 해석</h3>
+          <ul class="automatic-summary-list">${summaryItems}</ul>
+        </div>
+
+        <div class="automatic-caution">
+          <strong>해석 시 유의사항</strong>
+          <p>상품별 할인율이 서로 다르므로 선택 결과에는 정보 제공 방식뿐 아니라 할인율도 영향을 주었을 가능성이 있습니다. 따라서 관찰된 차이를 정보 유형만의 효과라고 단정할 수 없습니다. 이 분석은 현재 수집된 데이터의 경향을 요약한 기술통계이며 인과관계를 증명하지 않습니다.</p>
+        </div>
+      </div>
+    </section>
+  `;
+}
 
 // ======================================================
 // 대시보드
 // ======================================================
 
-function renderDashboard() {
-  const completed =
+function renderDashboard() {  const completed =
     completedRows();
 
   const g1 =
@@ -1464,6 +1715,8 @@ function renderDashboard() {
 
         </section>
 
+        ${renderAutomaticAnalysis()}
+
         <div class="analysis-note">
 
           <strong>
@@ -1492,8 +1745,7 @@ function renderDashboard() {
         <div class="dashboard-footer">
           INSITE Smartphone Purchase Experiment
         </div>
-
-      </main>
+              </main>
 
     </div>
   `;
